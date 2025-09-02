@@ -80,16 +80,52 @@ const IMAGE_DIMENSION_REGEX = /^[^|]+\|\d+x\d+$/;
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: ({ children }) => {
-      let id = generateId(getTextContent(children));
-      return <h1 id={id}>{children}</h1>;
+      let text = getTextContent(children);
+      let id = generateId(text);
+      return (
+        <h1 id={id}>
+          <span className="heading-text">{children}</span>
+          <a
+            href={`#${id}`}
+            aria-label={`${text} へのリンク`}
+            className="heading-anchor"
+          >
+            #
+          </a>
+        </h1>
+      );
     },
     h2: ({ children }) => {
-      let id = generateId(getTextContent(children));
-      return <h2 id={id}>{children}</h2>;
+      let text = getTextContent(children);
+      let id = generateId(text);
+      return (
+        <h2 id={id}>
+          <span className="heading-text">{children}</span>
+          <a
+            href={`#${id}`}
+            aria-label={`${text} へのリンク`}
+            className="heading-anchor"
+          >
+            #
+          </a>
+        </h2>
+      );
     },
     h3: ({ children }) => {
-      let id = generateId(getTextContent(children));
-      return <h3 id={id}>{children}</h3>;
+      let text = getTextContent(children);
+      let id = generateId(text);
+      return (
+        <h3 id={id}>
+          <span className="heading-text">{children}</span>
+          <a
+            href={`#${id}`}
+            aria-label={`${text} へのリンク`}
+            className="heading-anchor"
+          >
+            #
+          </a>
+        </h3>
+      );
     },
     h4: ({ children }) => {
       let id = generateId(getTextContent(children));
