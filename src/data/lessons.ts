@@ -1,5 +1,7 @@
 export type Module = {
   id: string;
+  /** カテゴリ名（左カラムのラベルに使用） */
+  category: string;
   title: string;
   description: string;
   lessons: Lesson[];
@@ -44,9 +46,10 @@ export async function getLessonContent(slug: string) {
   return (await import(`@/data/lessons/${slug}.mdx`)).default;
 }
 
-const lessons = [
+const lessons: Module[] = [
   {
     id: "codex-cli",
+    category: "コーディングエージェント",
     title: "Codex CLI 入門",
     description:
       "導入から最初のプロンプト実行まで。WindowsネイティブとmacOSに対応。",
@@ -59,5 +62,21 @@ const lessons = [
         video: null,
       },
     ],
+  },
+  {
+    id: "ai-services",
+    category: "最新AIサービス",
+    title: "最新AIサービス セットアップ＆活用",
+    description:
+      "主要AIプラットフォームの特徴と導入・比較・ユースケースをまとめます。",
+    lessons: [],
+  },
+  {
+    id: "ai-ide",
+    category: "AI統合型IDE",
+    title: "AI統合IDEの使いこなし",
+    description:
+      "VS Code/JetBrains系のAIアシストや拡張の導入・活用ベストプラクティス。",
+    lessons: [],
   },
 ];

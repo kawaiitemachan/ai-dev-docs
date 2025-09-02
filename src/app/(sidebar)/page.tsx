@@ -68,7 +68,7 @@ export default async function Page() {
               <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 text-sm/7 font-semibold text-gray-950 sm:gap-3 dark:text-white">
                 <div className="flex items-center gap-1.5">
                   <BookIcon className="stroke-gray-950/40 dark:stroke-white/40" />
-                  {modules.length} セクション
+                  {modules.length} カテゴリ
                 </div>
                 <span className="hidden text-gray-950/25 sm:inline dark:text-white/25">
                   &middot;
@@ -103,7 +103,7 @@ export default async function Page() {
                 <PageSection
                   key={module.id}
                   id={module.id}
-                  title={`セクション ${index + 1}`}
+                  title={module.category}
                 >
                   <div className="max-w-2xl">
                     <h2 className="text-2xl/7 font-medium tracking-tight text-pretty text-gray-950 dark:text-white">
@@ -112,20 +112,25 @@ export default async function Page() {
                     <p className="mt-4 text-base/7 text-gray-700 sm:text-sm/7 dark:text-gray-400">
                       {module.description}
                     </p>
-
-                    <ol className="mt-6 space-y-4">
-                      {module.lessons.map((lesson) => (
-                        <li key={lesson.id}>
-                          <ContentLink
-                            title={lesson.title}
-                            description={lesson.description}
-                            href={`/${lesson.id}`}
-                            type="video"
-                            duration={lesson.video?.duration}
-                          />
-                        </li>
-                      ))}
-                    </ol>
+                    {module.lessons.length > 0 ? (
+                      <ol className="mt-6 space-y-4">
+                        {module.lessons.map((lesson) => (
+                          <li key={lesson.id}>
+                            <ContentLink
+                              title={lesson.title}
+                              description={lesson.description}
+                              href={`/${lesson.id}`}
+                              type="video"
+                              duration={lesson.video?.duration}
+                            />
+                          </li>
+                        ))}
+                      </ol>
+                    ) : (
+                      <p className="mt-6 text-sm/6 text-gray-500 dark:text-gray-400">
+                        近日公開のコンテンツです。追加予定の資料をこのカテゴリに集約します。
+                      </p>
+                    )}
                   </div>
                 </PageSection>
               ))}
