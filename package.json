@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "cf:dev": "opennext dev -t cloudflare",
+    "cf:build": "opennext build -t cloudflare",
+    "cf:deploy": "opennext deploy -t cloudflare"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.6",
@@ -32,9 +35,11 @@
     "@types/node": "^24.1.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "opennext": "^3",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.2.0",
     "prettier-plugin-tailwindcss": "^0.6.14",
+    "wrangler": "^3",
     "typescript": "^5.8.3"
   }
 }

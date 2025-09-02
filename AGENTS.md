@@ -42,6 +42,12 @@ NPM スクリプト（`package.json`）:
 - `npm run lint` … Next.js 標準 ESLint
 - `npm run format` … Prettier で整形（Tailwind 並べ替え含む）
 
+Cloudflare Workers デプロイ関連（OpenNext を採用）:
+
+- `npm run cf:dev` … Cloudflare Workers 上で開発（ローカルプレビュー）
+- `npm run cf:build` … Workers 用にビルド
+- `npm run cf:deploy` … 本番デプロイ（`wrangler` がログイン済みであること）
+
 補足:
 - Node は LTS を推奨（詳細はドキュメントのインストール章を参照）。
 - 画像最適化は Next.js の仕組みを使う場合は `next/image` を検討。現状トップは `<img>` でローカル画像を読み込み。
