@@ -31,46 +31,32 @@
   }
 
   h2 {
-    font-size: var(--text-xl);
-    line-height: --spacing(7);
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
     letter-spacing: -0.025em;
-    font-weight: var(--font-weight-medium);
-    margin-top: --spacing(15);
-    padding-top: --spacing(4);
+    font-weight: var(--font-weight-semibold);
+    margin-top: --spacing(16);
+    padding-left: --spacing(3.5);
     scroll-margin-top: --spacing(20);
+    border-left: solid 3px var(--color-cyan-500);
 
-    &::before {
-      content: "";
-      display: block;
-      height: 1px;
-      background-color: --alpha(var(--color-gray-950) / 10%);
-      margin-bottom: --spacing(3);
-
-      @variant dark {
-        background-color: --alpha(var(--color-white) / 10%);
-      }
+    @variant dark {
+      border-left-color: var(--color-cyan-400);
     }
   }
 
   h3 {
-    font-size: var(--text-lg);
-    line-height: --spacing(7);
-    letter-spacing: -0.025em;
-    font-weight: var(--font-weight-medium);
-    margin-top: --spacing(10);
-    padding-top: --spacing(3);
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+    letter-spacing: -0.015em;
+    font-weight: var(--font-weight-semibold);
+    margin-top: --spacing(12);
+    padding-left: --spacing(3);
     scroll-margin-top: --spacing(20);
+    border-left: solid 2px var(--color-cyan-400);
 
-    &::before {
-      content: "";
-      display: block;
-      height: 1px;
-      background-color: --alpha(var(--color-gray-950) / 6%);
-      margin-bottom: --spacing(2.5);
-
-      @variant dark {
-        background-color: --alpha(var(--color-white) / 8%);
-      }
+    @variant dark {
+      border-left-color: var(--color-cyan-300);
     }
   }
 
