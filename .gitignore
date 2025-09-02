@@ -19,8 +19,6 @@ pnpm-debug.log*
 .next/
 .vercel/
 out/
-.open-next/
-.opennext/
 
 # Builds
 dist/

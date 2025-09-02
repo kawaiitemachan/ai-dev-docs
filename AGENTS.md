@@ -42,11 +42,12 @@ NPM スクリプト（`package.json`）:
 - `npm run lint` … Next.js 標準 ESLint
 - `npm run format` … Prettier で整形（Tailwind 並べ替え含む）
 
-Cloudflare Workers デプロイ関連（OpenNext を採用）:
+デプロイ（Vercel）:
 
-- `npm run cf:dev` … Cloudflare Workers 上で開発（ローカルプレビュー）
-- `npm run cf:build` … Workers 用にビルド
-- `npm run cf:deploy` … 本番デプロイ（`wrangler` がログイン済みであること）
+- GitHub リポジトリを Vercel に接続すると自動デプロイ（Push → Build → Deploy）
+- フレームワーク: Next.js（自動検出）
+- Build Command: `next build`（自動） / Output: `.next`（自動）
+- 環境変数が必要な場合は Vercel の Project Settings から設定
 
 補足:
 - Node は LTS を推奨（詳細はドキュメントのインストール章を参照）。
