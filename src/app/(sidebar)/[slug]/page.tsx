@@ -9,7 +9,7 @@ import { SidebarLayoutContent } from "@/components/sidebar-layout";
 import TableOfContents from "@/components/table-of-contents";
 import { Video } from "@/components/video-player";
 import { CodeCopy } from "@/components/code-copy";
-import { getLesson, getLessonContent } from "@/data/lessons";
+import { getLesson, getLessonContent, getModules } from "@/data/lessons";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -24,6 +24,15 @@ export async function generateMetadata({
     title: `${lesson?.title} - Seminar Docs`,
     description: lesson?.description,
   };
+}
+
+// Cloudflare Workers での動的 import 依存を避け、全記事を事前レンダリング
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  let modules = await Promise.resolve(getModules());
+  let slugs = modules.flatMap((m) => m.lessons.map((l) => l.id));
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function Page({
