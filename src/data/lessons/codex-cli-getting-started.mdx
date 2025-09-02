@@ -1,0 +1,160 @@
+---
+---
+
+# 明日から使える「Codex CLI」超入門（Windowsネイティブ & macOS）
+
+> 目的：**導入 → 最低限のコマンド理解 → プロンプトの実行方法**を、初心者でも迷わず体験できること。
+>
+> ※WSLは使いません。Windowsへ**直接**インストールする手順を中心に説明します。
+
+## 0. Codex CLIってなに？
+
+- **ターミナルで動くAIコーディング相棒**。日本語で指示 → ファイル作成・編集・コマンド実行まで支援。
+- ChatGPTにサインインして使います（Plus / Proなどを想定）。
+
+## 1. 事前準備（共通）
+
+- ChatGPTにログイン可能な環境
+- 任意のエディタ（VS Codeなど）
+- 作業用フォルダ（例：Windowsなら `C:\\projects\\hello-codex` / macOSなら `~/projects/hello-codex`）
+
+## 2. インストール
+
+### 2-1. Windows（ネイティブ／WSLなし）
+
+1) Node.js（公式サイトのLTS）をインストール — [Node.js Official Downloads (LTS)](https://nodejs.org/en/download)
+
+- Windows Installer（`.msi`）をダウンロード → そのまま進める（`Add to PATH` はデフォルトで有効）
+- インストール後、**新しい**「Windows ターミナル」または「PowerShell」を開く
+
+```powershell
+node -v
+npm -v
+```
+
+2) Codex CLIを入れる
+
+```powershell
+npm install -g @openai/codex
+```
+
+3) 初回起動とログイン
+
+```powershell
+codex
+```
+
+- 画面の案内で「Sign in with ChatGPT」を選び、ブラウザでログイン
+
+> ヒント：`codex` が見つからない場合は次を確認し、表示されたパスを環境変数 `Path` に追加してターミナルを開き直します。
+
+```powershell
+npm prefix -g
+```
+
+---
+
+### 2-2. macOS
+
+#### A) かんたん（Node の事前インストール不要）：Homebrew
+
+Homebrew が入っていれば、Node を別途入れずに Codex を導入できます（必要な依存は Homebrew が解決）。
+
+```bash
+brew install codex
+codex  # 初回は Sign in with ChatGPT
+```
+
+アップデート:
+
+```bash
+brew upgrade codex
+```
+
+アンインストール:
+
+```bash
+brew uninstall codex
+```
+
+> 参考: Homebrew 未導入の場合は https://brew.sh/ を参照してください。
+
+#### B) NPM 経由（標準的な方法）
+
+- 公式のNode.js（LTS, .pkg）を入れてから npm で Codex を導入（安定）
+  - ダウンロード: [Node.js Official Downloads (LTS)](https://nodejs.org/en/download)
+
+```bash
+node -v && npm -v   # インストール確認
+npm install -g @openai/codex
+codex                # 初回は Sign in with ChatGPT
+```
+
+---
+
+## 3. 初回セットアップ（安全スタート）
+
+起動後、まずは状態確認と権限、モデルを設定します。
+
+```plaintext
+/status      # サインイン状態・プラン・モデル・承認モードを確認
+/approvals   # 権限レベルを選択（最初は Read Only 推奨。慣れたら Auto へ）
+/model       # モデル設定：GPT-5 / Reasoning: High を選択
+```
+
+- 推奨：Reasoning: High（実装精度重視）。重いと感じたら依頼を小さく分けてください。
+
+---
+
+## 4. 基本コマンド（最小セット）
+
+- `/model` …… モデルと推論レベルを選択
+- `/approvals` …… Codex が承認なしで実行できる範囲を設定
+- `/status` …… セッション設定とトークン使用状況を表示
+- `/new` …… 会話中に新しいチャットを開始
+- `/init` …… Codex 用の手順ファイル `AGENTS.md` を作成
+- `/compact` …… 会話を要約してコンテキストを節約
+- `/diff` …… Git の差分を表示（未追跡ファイルを含む）
+- `/mention` …… ファイルを会話にメンション
+- `/mcp` …… 設定済み MCP ツールの一覧
+- `/logout` …… Codex からログアウト
+- `/quit` …… Codex を終了
+- `/commit-push` …… 保存済みプロンプトを送信
+- 一発実行（ノンインタラクティブ）：
+
+> 補足：入力欄で `/` をタイプすると利用可能なコマンド一覧が表示されます。バージョンによって項目が異なる場合があります。
+
+```bash
+codex exec "プロンプト内容"
+```
+
+---
+
+## 5. プロンプトの実行方法（2通り）
+
+### A) 対話モード（起動して会話する）
+
+1. 作業フォルダへ移動して `codex` を実行
+2. 日本語でやりたいことを具体的に伝える
+
+例：
+
+- 「このフォルダの構成を読み取って、セットアップ手順を README.md にまとめて」
+- 「Nodeプロジェクトの .gitignore を作って、一般的な不要ファイルを除外して」
+- 「この error.log を読み込んでエラー原因と直し方を手順化して」
+
+### B) 一発実行（`codex exec`）
+
+- その場だけのタスクに便利。履歴や生成物はフォルダ内に保存されます。
+
+```bash
+codex exec "このプロジェクトのREADMEを日本語で作成。セットアップ・実行・トラブル対処を入れて"
+codex exec "一般的なNode向け .gitignore を作って"
+codex exec "package.json の scripts に format と lint を追加して説明して"
+```
+
+参考（Webサイト生成に軽く触れるなら）：
+
+```bash
+codex exec "index.html を作成。タイトルは『Hello Codex』。見出しと短い本文、軽いCSSを加えて"
+```
