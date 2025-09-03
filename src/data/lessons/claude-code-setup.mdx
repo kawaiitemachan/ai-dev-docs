@@ -1,0 +1,115 @@
+---
+---
+
+# ClaudeCode導入＆初期設定
+
+> 注意: ここに記載のコマンド実行は自己責任でお願いします。筆者環境では問題なく動作確認済みです。
+
+---
+
+## 1. 導入手順
+
+### インストール（Windows）
+
+PowerShell を「管理者ではない通常権限」で開き、次を実行します。
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+### ClaudeCode の起動
+
+- 任意のフォルダを PowerShell で開く
+- `claude` と入力して起動
+
+以上で導入と起動確認は完了です。
+
+---
+
+## 2. 初期設定
+
+### サブスクリプションでログイン
+
+1) 次のコマンドを実行:
+
+```bash
+/login
+```
+
+2) プロンプトが表示されたら「1. Claude account with subscription」を選択。
+
+3) ブラウザで Claude (Web) にログインし、表示されるトークンをコピー → ClaudeCode 側に貼り付け。
+
+### ログインの確認
+
+次を実行し、サブスク状態で認証されているか確認します。
+
+```bash
+/status
+```
+
+出力例（赤文字の箇所がサブスク登録の内容と一致していれば OK。その他は一致不要）:
+
+```
+Claude Code v1.0.85
+  L Session ID: 111111111111111-aaaaaaaaaaaaaa
+
+ Working Directory 
+  L /Users/your_name/Desktop/dev/test_folder
+
+ Installation 
+  LClaude command not found at /Users/tao/.local/bin/claude
+
+ System Diagnostics • /doctor
+  ⚠ Multiple installations detected (2 found)
+  ⚠Config mismatch: running npm-global but config says
+   native
+
+ MCP servers • /mcp
+  ✔ playwright
+  ✔ supabase
+  ✔ context7
+  ✔ exa
+
+Account • /login
+  L Login Method: Claude Max(or Pro) Account
+  L Organization: your_name
+  L Email: your-mail-adress@gmail.com
+
+ Memory • /memory
+  L user: ~/.claude/CLAUDE.md
+
+ Model • /model
+  L opus (claude-opus-4-1-20250805)
+```
+
+### サブスク情報でログインできていない場合
+
+1) 一度ログアウト:
+
+```bash
+/logout
+```
+
+2) もう一度ログイン:
+
+```bash
+/login
+```
+
+> 以降の流れは「サブスクリプションでログイン」と同じです。
+
+### 初期推奨コマンド
+
+- 既存コードベースの読み込みとルール提示:
+
+```bash
+/init
+```
+
+- モデル選択（Max プランは `opus` 推奨）:
+
+```bash
+/model
+```
+

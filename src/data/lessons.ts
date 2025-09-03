@@ -55,6 +55,13 @@ const lessons: Module[] = [
       "導入から最初のプロンプト実行まで。WindowsネイティブとmacOSに対応。",
     lessons: [
       {
+        id: "claude-code-setup",
+        title: "ClaudeCode導入＆初期設定",
+        description:
+          "Windowsでの導入、サブスクでのログイン確認、初期推奨コマンド。",
+        video: null,
+      },
+      {
         id: "codex-cli-getting-started",
         title: "明日から使える『Codex CLI』超入門（Windows & macOS）",
         description:
