@@ -48,11 +48,11 @@ export async function getLessonContent(slug: string) {
 
 const lessons: Module[] = [
   {
-    id: "codex-cli",
+    id: "coding-agents",
     category: "コーディングエージェント",
-    title: "Codex CLI 入門",
+    title: "コーディングエージェント",
     description:
-      "導入から最初のプロンプト実行まで。WindowsネイティブとmacOSに対応。",
+      "ローカル/ターミナルで動く生成AIのコーディング支援ツール群。導入と基本操作、ベストプラクティスをまとめます。",
     lessons: [
       {
         id: "claude-code-setup",
