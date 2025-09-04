@@ -7,7 +7,7 @@
 >
 > ※WSLは使いません。Windowsへ**直接**インストールする手順を中心に説明します。
 
-<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs/5 font-semibold text-amber-800 ring-1 ring-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:ring-amber-300/30">更新日: 2025/09/02</div>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs/5 font-semibold text-amber-800 ring-1 ring-amber-200 dark:bg-amber-400/10 dark:text-amber-300 dark:ring-amber-300/30">更新日: 2025/09/03</div>
 
 ## 0. Codex CLIってなに？
 
@@ -121,7 +121,6 @@ codex                # 初回は Sign in with ChatGPT
 - `/mcp` …… 設定済み MCP ツールの一覧
 - `/logout` …… Codex からログアウト
 - `/quit` …… Codex を終了
-- `/commit-push` …… 保存済みプロンプトを送信
 - 一発実行（ノンインタラクティブ）：
 
 > 補足：入力欄で `/` をタイプすると利用可能なコマンド一覧が表示されます。バージョンによって項目が異なる場合があります。
@@ -160,3 +159,19 @@ codex exec "package.json の scripts に format と lint を追加して説明�
 ```bash
 codex exec "index.html を作成。タイトルは『Hello Codex』。見出しと短い本文、軽いCSSを加えて"
 ```
+
+---
+
+### Web検索を有効化する（重要）
+
+- Codex を起動するときに `--search` を付けると、**Webサーチが有効**になります。
+
+```bash
+# 対話モードで起動しつつ Web検索を有効化
+codex --search
+
+# （参考）一発実行でも利用可能
+codex exec --search "最新の仕様変更を踏まえて README を更新して"
+```
+
+> メモ：Web上の最新情報が必要な作業（価格・ニュース・API 仕様の変更確認など）では `--search` を付けて起動するのが安全です。企業名・人名・日時など変動しやすい情報を扱う場合は特に推奨。
