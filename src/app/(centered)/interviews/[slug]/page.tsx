@@ -27,7 +27,7 @@ export async function generateMetadata({
   let interview = await getInterview((await params).slug);
 
   return {
-    title: `Interview with ${interview?.name} - Compass`,
+    title: `Interview with ${interview?.name} - AI Dev Lab`,
     description: interview?.subtitle,
   };
 }

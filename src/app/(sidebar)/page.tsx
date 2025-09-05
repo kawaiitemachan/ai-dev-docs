@@ -17,9 +17,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Seminar Docs - AIセミナー資料",
+  title: "AI Dev Lab - AI開発ツール実践ガイド",
   description:
-    "AI開発系ツールの使い方とコマンドを素早く復習・導入できる資料集。",
+    "AI開発系ツールの使い方とコマンドを素早く復習・導入できる実践ガイド。",
 };
 
 function formatDuration(seconds: number): string {

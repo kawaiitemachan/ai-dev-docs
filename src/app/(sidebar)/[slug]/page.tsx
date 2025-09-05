@@ -21,7 +21,7 @@ export async function generateMetadata({
   let lesson = await getLesson((await params).slug);
 
   return {
-    title: `${lesson?.title} - Seminar Docs`,
+    title: `${lesson?.title} - AI Dev Lab`,
     description: lesson?.description,
   };
 }

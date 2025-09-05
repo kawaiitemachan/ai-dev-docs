@@ -10,7 +10,7 @@ import { getInterviews } from "@/data/interviews";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Interviews - Compass",
+  title: "Interviews - AI Dev Lab",
   description: "Explore interviews with industry experts and thought leaders.",
 };
 
