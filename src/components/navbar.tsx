@@ -28,6 +28,11 @@ export function Navbar({ children, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+const NAV_ITEMS: Array<{ title: string; href: string }> = [
+  { title: "Docs", href: "/" },
+  { title: "Seminar Archives", href: "/seminar-archives" },
+];
+
 function MobileNavigation({
   open,
   onClose,
@@ -47,7 +52,7 @@ function MobileNavigation({
           </div>
           <div className="mt-4">
             <div className="flex flex-col gap-y-2">
-              {[["Docs", "/"]].map(([title, href]) => (
+              {NAV_ITEMS.map(({ title, href }) => (
                 <CloseButton
                   as={Link}
                   key={href}
@@ -78,7 +83,11 @@ function SiteNavigation() {
         onClose={() => setMobileMenuOpen(false)}
       />
       <div className="flex gap-x-6 text-sm/6 text-gray-950 max-lg:hidden dark:text-white">
-        <Link href="/">Docs</Link>
+        {NAV_ITEMS.map(({ title, href }) => (
+          <Link key={href} href={href}>
+            {title}
+          </Link>
+        ))}
       </div>
     </nav>
   );
