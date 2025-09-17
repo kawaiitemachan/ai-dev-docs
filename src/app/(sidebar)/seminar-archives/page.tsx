@@ -55,6 +55,8 @@ export default function Page() {
                 title="生成AI開発ワークショップ（2025年9月）"
                 description="セッション全編の録画（YouTube 限定公開）"
                 href="https://youtu.be/mqJKIs2WUmY"
+                target="_blank"
+                rel="noreferrer"
               />
             </div>
           </PageSection>

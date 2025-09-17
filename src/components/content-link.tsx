@@ -2,6 +2,7 @@ import { ArticleIcon } from "@/icons/article-icon";
 import { CheckmarkIcon } from "@/icons/checkmark-icon";
 import { CirclePlayIcon } from "@/icons/circle-play-icon";
 import Link from "next/link";
+import type { ComponentProps } from "react";
 
 function formatDuration(seconds: number): string {
   let m = Math.floor(seconds / 60);
@@ -16,17 +17,23 @@ export function ContentLink({
   href,
   type = "article",
   duration,
+  target,
+  rel,
 }: {
   title: string;
   description: string;
   href: string;
   type?: "article" | "tool" | "video";
   duration?: number | null;
+  target?: ComponentProps<typeof Link>["target"];
+  rel?: string;
 }) {
   return (
     <div className="flow-root">
       <Link
         href={href}
+        target={target}
+        rel={rel}
         className="-mx-3 -my-2 flex gap-3 rounded-xl px-3 py-2 text-sm/7 hover:bg-gray-950/4 dark:hover:bg-white/5"
       >
         <div className="flex h-lh shrink items-center">
