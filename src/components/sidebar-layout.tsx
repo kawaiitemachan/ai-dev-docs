@@ -28,6 +28,13 @@ export const SidebarContext = createContext<{
   setIsMobileDialogOpen: () => {},
 });
 
+const EXTRA_NAVIGATION = [
+  {
+    title: "アーカイブ",
+    links: [{ title: "限定公開セミナーアーカイブ", href: "/seminar-archives" }],
+  },
+];
+
 function CourseNavigation({
   modules,
   onNavigate,
@@ -65,6 +72,34 @@ function CourseNavigation({
                   className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
                 >
                   {lesson.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      {EXTRA_NAVIGATION.map((section) => (
+        <div key={section.title}>
+          <h2 className="text-base/7 font-semibold text-pretty text-gray-950 sm:text-sm/6 dark:text-white">
+            {section.title}
+          </h2>
+          <ul className="mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400">
+            {section.links.map((link) => (
+              <li
+                key={link.href}
+                className={clsx(
+                  "-ml-px flex border-l border-transparent pl-4",
+                  "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
+                  "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
+                )}
+              >
+                <Link
+                  href={link.href}
+                  aria-current={link.href === pathname ? "page" : undefined}
+                  onNavigate={onNavigate}
+                  className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
+                >
+                  {link.title}
                 </Link>
               </li>
             ))}
