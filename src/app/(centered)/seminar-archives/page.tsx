@@ -26,12 +26,22 @@ export default function Page() {
         </Breadcrumbs>
       }
     >
-      <h1 className="mt-10 text-3xl/10 font-normal tracking-tight text-gray-950 sm:mt-14 dark:text-white">
-        限定公開セミナーアーカイブ
-      </h1>
-      <p className="mt-6 max-w-xl text-base/7 text-gray-600 dark:text-gray-400">
-        セミナー参加者に案内した限定公開の録画リンクをまとめています。ページURLを共有された方のみアクセスしてください。
-      </p>
+      <div className="relative mt-10 overflow-hidden rounded-3xl border border-gray-950/10 bg-gray-950/80 shadow-2xl dark:border-white/10 sm:mt-14">
+        <img
+          alt=""
+          src="/images/seminar-archives-background.jpeg"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-950/60 via-gray-950/50 to-gray-950/20 dark:from-black/70 dark:via-black/60 dark:to-black/30" />
+        <div className="relative px-6 py-16 sm:px-10 sm:py-20 lg:px-14">
+          <h1 className="text-3xl/10 font-normal tracking-tight text-white">
+            限定公開セミナーアーカイブ
+          </h1>
+          <p className="mt-6 max-w-2xl text-base/7 text-gray-200">
+            セミナー参加者に案内した限定公開の録画リンクをまとめています。ページURLを共有された方のみアクセスしてください。
+          </p>
+        </div>
+      </div>
 
       <div className="mt-16 space-y-16">
         <PageSection title={<h2>2025年開催分</h2>}>
