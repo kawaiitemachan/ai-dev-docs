@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## プロジェクト概要
-「AI Dev Lab」は Next.js 15 と Tailwind CSS v4 を使用した技術ドキュメントサイトです。AI開発ツール（Claude Code、Cursor、Windsurf等）の実践的なチュートリアルと資料を提供しています。Cloudflare Workers でホスティングされ、全ページを静的生成しています。
+「AI Dev Lab」はAI開発ツール（Claude Code、Cursor、Windsurf等）の実践的なチュートリアルと資料を提供する技術ドキュメントサイトです。
 
 ## 開発コマンド
 
@@ -27,42 +27,32 @@ npm run format
 ## アーキテクチャ構造
 
 ### 技術スタック
-- **Next.js 15** - App Router、静的生成（`force-static`）でCloudflare Workers対応
+- **Next.js 15** - App Router、ページは静的生成
 - **Tailwind CSS v4** - `@tailwindcss/postcss`使用、設定ファイル不要
-- **MDX** - コンテンツ管理、動的インポートで各レッスンを読み込み
-- **TypeScript** - 厳格モード（`strict: true`）
+- **MDX** - `/src/data/lessons/`および`/src/data/interviews/`でコンテンツ管理
+- **TypeScript** - 厳格モード（`strict: true`）、パスエイリアス`@/*`を`./src/*`にマップ
 - **Shiki** - シンタックスハイライト（`mdx-components.tsx`で設定）
 
 ### ルーティング構造
-```
-/src/app/
-├── (sidebar)/           # サイドバーレイアウト
-│   ├── page.tsx        # ホームページ（レッスン一覧）
-│   └── [slug]/         # 各レッスンページ（動的ルート）
-├── (centered)/         # 中央配置レイアウト
-│   ├── interviews/     # インタビュー一覧・詳細
-│   └── resources/      # リソースページ
-└── (auth)/             # 認証レイアウト（ログイン、OTP）
-```
+- `(sidebar)` グループ - サイドバー付きレイアウト（ホーム、レッスン詳細）
+- `(centered)` グループ - 中央配置レイアウト（インタビュー、リソース）
+- `(auth)` グループ - 認証関連ページ（ログイン、OTP）
 
-### データアーキテクチャ
-- **レッスンシステム**: `/src/data/lessons.ts`がモジュール構造を定義、MDXファイルを動的インポート
-- **静的生成**: `generateStaticParams()`で全レッスンのslugを事前生成
-- **動画統合**: レッスンメタデータに動画URL、サムネイル、再生時間を含む
-- **ナビゲーション**: 各レッスンに次のレッスンへのリンクを自動生成
+### データ管理
+- **レッスン**: `/src/data/lessons.ts`でメタデータ定義、MDXファイルを動的インポート
+- **インタビュー**: `/src/data/interviews.ts`でメタデータ定義
+- **静的生成**: `generateStaticParams()`で全ページのslugを事前生成
 
-### MDX処理
-- **画像記法**: `![Alt text|幅x高さ](画像パス)` - サイズ指定必須
-- **テーマ対応画像**: `{scheme}`プレースホルダーで`light/dark`画像を切り替え
-- **コンポーネント**: `<CodeCopy />`でコードブロックにコピー機能を自動追加
-- **リモート画像**: `next.config.mjs`の`images.remotePatterns`で許可リストを管理
+### MDX画像処理
+- サイズ指定必須: `![Alt text|幅x高さ](画像パス)`
+- テーマ対応: `{scheme}`プレースホルダーで`light/dark`画像切り替え
+- リモート画像: `next.config.mjs`の`images.remotePatterns`で許可リスト管理
 
-### コンテンツ追加手順
-新しいレッスンを追加:
-1. `/src/data/lessons.ts`でレッスンメタデータを該当モジュールに追加
-2. `/src/data/lessons/[slug].mdx`ファイルを作成（slugはレッスンIDと一致）
-3. 必要に応じて画像を`/public`に配置
+### コンテンツ追加
+新しいレッスン:
+1. `/src/data/lessons.ts`にメタデータ追加
+2. `/src/data/lessons/[slug].mdx`ファイル作成
 
-新しいインタビューを追加:
-1. `/src/data/interviews.ts`でインタビューメタデータを追加
-2. `/src/data/interviews/[slug].mdx`ファイルを作成
+新しいインタビュー:
+1. `/src/data/interviews.ts`にメタデータ追加
+2. `/src/data/interviews/[slug].mdx`ファイル作成

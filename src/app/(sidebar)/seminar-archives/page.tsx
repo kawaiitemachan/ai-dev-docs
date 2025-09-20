@@ -52,7 +52,15 @@ export default function Page() {
             <div className="mt-8 max-w-2xl space-y-6">
               <ContentLink
                 type="video"
-                title="生成AI開発ワークショップ（2025年9月）"
+                title="最新AI＆AI開発セミナー（2025年9月17日）"
+                description="セッション全編の録画（YouTube 限定公開）"
+                href="https://youtu.be/VKr0u5BqGWI"
+                target="_blank"
+                rel="noreferrer"
+              />
+              <ContentLink
+                type="video"
+                title="最新AI＆AI開発セミナー（2025年9月3日）"
                 description="セッション全編の録画（YouTube 限定公開）"
                 href="https://youtu.be/mqJKIs2WUmY"
                 target="_blank"
