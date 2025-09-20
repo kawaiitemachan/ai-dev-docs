@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Seminar Archives - AI Dev Lab",
   description:
-    "限定公開セミナーのアーカイブ動画リンクをまとめたページです。参加者向けに配布した録画へのアクセスを管理します。",
+    "過去に開催した限定公開セミナーのアーカイブ動画をまとめたページです。",
 };
 
 export default function Page() {
