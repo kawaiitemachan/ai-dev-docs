@@ -2,7 +2,6 @@
 
 import * as Headless from '@headlessui/react'
 import clsx from 'clsx'
-import { LayoutGroup, motion } from 'motion/react'
 import React, { forwardRef, useId } from 'react'
 import { TouchTarget } from './button'
 import { Link } from './link'
@@ -51,9 +50,7 @@ export function SidebarSection({ className, ...props }: React.ComponentPropsWith
   let id = useId()
 
   return (
-    <LayoutGroup id={id}>
-      <div {...props} data-slot="section" className={clsx(className, 'flex flex-col gap-0.5')} />
-    </LayoutGroup>
+    <div {...props} id={id} data-slot="section" className={clsx(className, 'flex flex-col gap-0.5')} />
   )
 }
 
@@ -108,10 +105,7 @@ export const SidebarItem = forwardRef(function SidebarItem(
   return (
     <span className={clsx(className, 'relative')}>
       {current && (
-        <motion.span
-          layoutId="current-indicator"
-          className="absolute inset-y-2 -left-4 w-0.5 rounded-full bg-zinc-950 dark:bg-white"
-        />
+        <span className="absolute inset-y-2 -left-4 w-0.5 rounded-full bg-zinc-950 dark:bg-white" />
       )}
       {typeof props.href === 'string' ? (
         <Headless.CloseButton
