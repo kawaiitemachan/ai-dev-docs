@@ -78,10 +78,24 @@ const lessons: Module[] = [
       "AI開発に取り組む前に押さえておきたい基礎概念・設計指針・リスク管理を体系的に整理します。",
     lessons: [
       {
-        id: "git-basics-for-ai",
-        title: "AI開発に最低限必要なGitの超基礎",
+        id: "git-basics",
+        title: "Git基礎：インストールと記録の基本",
         description:
-          "Git未経験でも履歴を残す・戻す・整えるが分かる実践ガイド。",
+          "インストールから add / commit / restore までを一気に体験する超入門。",
+        video: null,
+      },
+      {
+        id: "git-branch-intro",
+        title: "Gitブランチ編：安全に試すための分岐運用",
+        description:
+          "ブランチの考え方と switch / merge / cleanup の基本操作を学ぶ。",
+        video: null,
+      },
+      {
+        id: "github-basics",
+        title: "GitHub編：リモート連携と共同作業の第一歩",
+        description:
+          "リモートリポジトリの作成・push/pull・Cloneまでを超初心者向けに整理。",
         video: null,
       },
     ],

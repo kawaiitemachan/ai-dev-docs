@@ -1,0 +1,195 @@
+---
+---
+
+import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
+import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
+import { Divider } from "@catalyst-ui-kit/typescript/divider";
+
+<Heading level={1}>Git基礎：インストールと記録の基本</Heading>
+<Text>
+  Git を触ったことがない状態から、変更を安全に記録し、いつでもやり直せるようになるまでの最短ルートをまとめました。AI 開発のコードやプロンプト、設定ファイルを守るための「最低限ここだけ」はこのページで完結します。
+</Text>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs/5 font-semibold text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-emerald-300/30">
+  更新日: 2025/09/21
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>この記事でできるようになること</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    Windows / macOS で Git をインストールし、ユーザー情報を設定できる
+  </li>
+  <li>
+    <Code>git status</Code> → <Code>git add</Code> → <Code>git commit</Code> の一連の流れを理解する
+  </li>
+  <li>
+    うっかりした変更を <Code>git restore</Code> で元に戻し、安心して作業を続けられる
+  </li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>インストールと初期設定</Subheading>
+<Text className="mt-3">
+  ここでは OS ごとのインストール方法と、最初に必須となる設定をまとめて押さえます。すでに Git を使っている方は「3. 動作確認と初期設定」だけ確認すれば大丈夫です。
+</Text>
+
+#### 1. Windows の場合
+<Text className="mt-3">
+  公式インストーラーから導入するのが最も簡単です。次の手順に従って進めましょう。
+</Text>
+
+1. <TextLink href="https://git-scm.com/download/win">Git for Windows ダウンロードページ</TextLink>を開く
+2. 自動ダウンロードされた <Code>.exe</Code> を実行し、ウィザードを最後まで進める（基本的に既定値のままで OK）
+3. インストール後は<Strong>新しく</Strong>「Windows ターミナル」や「PowerShell」を開き直す
+
+<Text className="mt-4">
+  GUI で操作したい場合は <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> も合わせてインストールしておくと、後述の GitHub 編がスムーズです。
+</Text>
+
+#### 2. macOS の場合
+<Text className="mt-3">
+  Homebrew を使う方法と、公式インストーラー（または Xcode Command Line Tools）を使う方法があります。好みのやり方で導入しましょう。
+</Text>
+
+- Homebrew 経由：
+
+```bash
+brew install git
+```
+
+- Homebrew を使わない場合：
+  - ターミナルで <Code>git</Code> と入力すると、Xcode Command Line Tools のインストール案内が表示されるので指示に従う
+  - または <TextLink href="https://git-scm.com/download/mac">公式インストーラー</TextLink>から <Code>.dmg</Code> をダウンロードして実行する
+
+<Text className="mt-4">
+  GUI 派の方も <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> を導入しておけば、後からコマンドと並行して操作を確認できます。
+</Text>
+
+#### 3. 動作確認と初期設定（全 OS 共通）
+
+```bash
+# 1. Git がインストールされているか確認
+git --version
+
+# 2. コミットに表示されるユーザー情報を設定（初回のみ）
+git config --global user.name "あなたの名前"
+git config --global user.email "you@example.com"
+
+# 3. 設定内容を確認
+git config --global --list
+```
+
+<Text className="mt-4">
+  バージョン番号が表示されればインストール成功です。GUI ツールでもこの設定が共有されるため、必ず自分の名前とメールアドレスに置き換えておきましょう。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>変更を記録する超基礎サイクル</Subheading>
+<Text className="mt-3">
+  ここからは実際にファイルを触りながら「現在の状態を確認 → 変更を並べる → 履歴に残す → やり直す」の流れを体験します。コマンドはすべてコピー＆ペーストで進められます。
+</Text>
+
+#### 1. Git リポジトリを用意する
+
+```bash
+mkdir git-intro && cd git-intro
+# 既存フォルダなら cd のみでOK
+
+git init
+```
+
+<Text className="mt-4">
+  実行後に <Code>.git</Code> という隠しフォルダができれば準備完了です。既存プロジェクトの場合は <Code>git status</Code> を実行して Git 管理下かどうか確認してください。
+</Text>
+
+#### 2. 状態把握：<Code>git status</Code>
+<Text>
+  Git は常に「何が変わったか」を教えてくれます。作業前後でこまめに <Code>git status</Code> を叩く癖をつけましょう。
+</Text>
+
+```bash
+git status
+```
+
+<Text className="mt-4">
+  新規ファイルを作成すると「Untracked files」と表示されます。例として <Code>notes.txt</Code> を作り、1 行テキストを書き込んでみてください。
+</Text>
+
+```bash
+echo "はじめてのGitメモ" > notes.txt
+```
+
+#### 3. ステージング：<Code>git add</Code>
+<Text>
+  Git では「ステージング」という待機列に変更を並べてから、まとめて記録します。対象ファイルを指定して <Code>git add</Code> を実行しましょう。
+</Text>
+
+```bash
+git add notes.txt
+```
+
+<Text className="mt-4">
+  直後に <Code>git status</Code> を再度実行すると、<Strong>Changes to be committed</Strong> に移ることが確認できます。ステージから外したい場合は <Code>git restore --staged notes.txt</Code> でやり直せます。
+</Text>
+
+#### 4. 履歴を確定する：<Code>git commit</Code>
+<Text>
+  ステージされた変更は <Code>git commit</Code> で履歴に残します。メッセージは「何をしたのか」が後から分かるように短い文章で書きます。
+</Text>
+
+```bash
+git commit -m "docs: add first note"
+```
+
+<Text className="mt-4">
+  成功すると「[main (root-commit) ...] docs: add first note」といったメッセージが表示されます。履歴は <Code>git log --oneline</Code> で一覧できます。
+</Text>
+
+#### 5. やり直し：<Code>git restore</Code>
+<Text>
+  まだコミットしていない変更を取り消したいときは <Code>git restore</Code> を使います。ファイルごとに元の状態へ戻せるので、実験的な変更も怖くありません。
+</Text>
+
+```bash
+# ファイル内容を直前のコミット時点に戻す
+git restore notes.txt
+
+# ステージされた状態だけを解除する（内容は保持）
+git restore --staged notes.txt
+```
+
+<Text className="mt-4">
+  「コミット後に戻したい」場合は別のコマンドが必要ですが、まずはコミット前のリカバリーを確実にできるようにしましょう。慌てず <Code>git status</Code> で現状を見ながら進めるのが鉄則です。
+</Text>
+
+#### 6. ミニ演習：1 コミットを完走する
+<Text className="mt-4">
+  以下の流れを 2 回繰り返して、変更を残す感覚を掴みましょう。
+</Text>
+
+1. <Code>notes.txt</Code> に行を追加 → <Code>git status</Code>
+2. <Code>git add notes.txt</Code> → <Code>git commit -m "docs: update notes with ..."</Code>
+3. 不要な変更が混ざったら <Code>git restore</Code> で戻す
+
+<Text className="mt-6">
+  ここまでできれば、AI プロジェクトでも安心してファイルを編集・保存できる土台が整いました。次はブランチを使って安全に試せる環境を作りましょう。
+</Text>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>次に進む</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>Gitブランチ編</Strong>（次の記事）：分岐を作って実験する流れを学ぶ
+  </li>
+  <li>
+    <Strong>GitHub編</Strong>：リモートに履歴を共有し、他のメンバーと協力する手順
+  </li>
+</ul>
+
+<Text className="mt-6">
+  わからないことがあれば <TextLink href="https://git-scm.com/docs">公式ドキュメント</TextLink> をチートシートのように参照しながら、少しずつ慣れていきましょう。
+</Text>

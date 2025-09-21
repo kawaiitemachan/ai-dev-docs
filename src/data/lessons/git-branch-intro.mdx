@@ -1,0 +1,147 @@
+---
+---
+
+import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
+import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
+import { Divider } from "@catalyst-ui-kit/typescript/divider";
+
+<Heading level={1}>Gitブランチ編：安全に試すための分岐運用</Heading>
+<Text>
+  メインの履歴を壊さずに試行錯誤するには「ブランチ」を使いこなすのが近道です。超初心者でも迷わないように、ブランチを作る→作業する→メインへ戻す→片付ける、の4ステップに分けて解説します。
+</Text>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-2.5 py-1 text-xs/5 font-semibold text-indigo-800 ring-1 ring-indigo-200 dark:bg-indigo-400/10 dark:text-indigo-200 dark:ring-indigo-300/30">
+  更新日: 2025/09/21
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>この記事でできるようになること</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    ブランチの役割と、メインとの関係をイメージできる
+  </li>
+  <li>
+    <Code>git switch</Code> / <Code>git merge</Code> を使って安全に変更を取り込める
+  </li>
+  <li>
+    使い終わったブランチを片付け、混乱を防ぐ習慣を身につける
+  </li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>ブランチとは？</Subheading>
+<Text className="mt-3">
+  ブランチは「履歴の分岐ライン」です。<Strong>main</Strong>（または <Strong>master</Strong>）が本番用の軸で、そこから枝分かれしたブランチで変更を試します。うまくいったものだけを main に取り込むことで、失敗を気にせず実験できます。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>ステップ1：ブランチを作って移動する</Subheading>
+<Text className="mt-3">
+  まずは main を最新にしてから、ブランチを作成します。初めてなら命名規則は気にせず「feature/○○」のような分かりやすい名前を付けましょう。
+</Text>
+
+```bash
+# main にいることを確認
+git status
+
+# main の最新コミットを取り込む（すでに最新ならスキップ）
+git pull --ff-only
+
+# ブランチを作成して同時に切り替え
+git switch -c feature/update-prompt
+```
+
+<Text className="mt-4">
+  <Code>git branch</Code> だけだとブランチは作られますが移動しません。<Code>git switch -c</Code> なら作成と移動を一度で行えます。現在のブランチはターミナルのプロンプトや <Code>git status</Code> で確認できます。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>ステップ2：ブランチで作業する</Subheading>
+<Text className="mt-3">
+  やることは Git 基礎編と同じ。「確認 → add → commit」です。作業が終わったらブランチにコミットを残しておきましょう。
+</Text>
+
+```bash
+# 変更を確認
+git status
+
+# 必要なファイルをステージしてコミット
+git add prompt-plan.md
+git commit -m "docs: add prompt plan draft"
+```
+
+<Text className="mt-4">
+  コミットを重ねるほど変更が整理され、後からレビューもしやすくなります。こまめに区切るのがコツです。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>ステップ3：メインへ取り込む</Subheading>
+<Text className="mt-3">
+  ブランチでの作業が終わったら main に戻り、変更を取り込みます。単純な変更なら <Code>git merge</Code> だけで完了します。
+</Text>
+
+```bash
+# main に戻る
+git switch main
+
+# feature ブランチを取り込む
+git merge feature/update-prompt
+```
+
+<Text className="mt-4">
+  競合（Conflict）が発生した場合は、Git が該当ファイルに印を付けます。編集して矛盾を解消し、<Code>git add</Code> → <Code>git commit</Code> で完了です。Visual Studio Code などのエディタは競合解消を手助けしてくれる UI を備えています。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>ステップ4：使い終わったブランチを片付ける</Subheading>
+<Text className="mt-3">
+  取り込みが済んだブランチを放置すると、一覧がすぐにいっぱいになります。削除しておくと次の作業で迷いません。
+</Text>
+
+```bash
+# 削除前にブランチ一覧を確認
+git branch
+
+# マージ済みのブランチを削除
+git branch -d feature/update-prompt
+```
+
+<Text className="mt-4">
+  未マージのまま削除したい場合は <Code>git branch -D ブランチ名</Code> ですが、履歴が失われるので慎重に。まずは main に取り込む（merge）か、別途バックアップしておきましょう。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>よくあるトラブルと対処</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>main に戻り忘れた</Strong> → <Code>git switch main</Code> で戻ってから作業を開始
+  </li>
+  <li>
+    <Strong>余計なファイルをマージしてしまった</Strong> → <Code>git log --oneline</Code> で履歴を確認し、<Code>git revert</Code> で元に戻す（詳細は GitHub 編で紹介）
+  </li>
+  <li>
+    <Strong>競合が怖い</Strong> → こまめに main を <Code>git pull</Code> しておくと競合が小さくなります
+  </li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>次に進む</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>GitHub編</Strong>（次の記事）：リモートリポジトリを作成し、チームと履歴を共有する
+  </li>
+  <li>
+    <Strong>復習</Strong>：main とは別に練習用リポジトリを作り、毎回ブランチで作業する癖をつける
+  </li>
+</ul>
+
+<Text className="mt-6">
+  ブランチ運用に慣れれば、AI モデルの試行錯誤や設定変更も気軽に試せます。次は GitHub と接続して、リモートでも同じ安心感を得ましょう。
+</Text>

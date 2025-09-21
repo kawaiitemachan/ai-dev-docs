@@ -1,0 +1,141 @@
+---
+---
+
+import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
+import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
+import { Divider } from "@catalyst-ui-kit/typescript/divider";
+
+<Heading level={1}>GitHub編：リモート連携と共同作業の第一歩</Heading>
+<Text>
+  Git がローカルの履歴管理ツールなのに対し、GitHub はその履歴をインターネット経由で共有するためのサービスです。ここでは GitHub のアカウント作成からリモートリポジトリとの接続、最低限使う push / pull / clone を段階的に体験します。
+</Text>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-2.5 py-1 text-xs/5 font-semibold text-sky-800 ring-1 ring-sky-200 dark:bg-sky-400/10 dark:text-sky-200 dark:ring-sky-300/30">
+  更新日: 2025/09/21
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>この記事でできるようになること</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    GitHub アカウントとリポジトリを作成し、ローカルの Git と接続する
+  </li>
+  <li>
+    <Code>git push</Code> / <Code>git pull</Code> / <Code>git clone</Code> の基本フローを理解する
+  </li>
+  <li>
+    誤って機密情報をアップしないためのチェックポイントを押さえる
+  </li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>1. GitHub アカウントを用意する</Subheading>
+<Text className="mt-3">
+  初めての場合は <TextLink href="https://github.com/">GitHub</TextLink> にアクセスし、無料アカウントを作成します。メールアドレスの確認が完了したら、プロフィール設定と 2 段階認証の有効化を済ませると安全です。
+</Text>
+
+<Text className="mt-4">
+  GUI ツールを使う場合は <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> をインストールし、同じアカウントでサインインしておくと、リモート操作をボタン一つで確認できます。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>2. リモートリポジトリを作成する</Subheading>
+<Text className="mt-3">
+  GitHub にログインした状態で右上の <Strong>＋</Strong> → <Strong>New repository</Strong> を選び、次の項目を設定します。
+</Text>
+
+<ol className="mt-4 list-decimal space-y-3 pl-6 text-base/7 text-gray-700 dark:text-gray-300">
+  <li><Strong>Repository name</Strong>：任意（例：<Code>ai-notes</Code>）</li>
+  <li><Strong>Public / Private</Strong>：公開範囲を選択（学習用は Private 推奨）</li>
+  <li><Strong>Add a README</Strong> はチェックしなくても OK（後で作成可能）</li>
+</ol>
+
+<Text className="mt-4">
+  作成すると、リポジトリのトップページに「Quick setup」ガイドが表示されます。ここにローカルと接続するためのコマンドが載っているので、次の章で使用します。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>3. 既存のローカルリポジトリを接続する</Subheading>
+<Text className="mt-3">
+  すでにローカルで Git 管理しているフォルダがある場合は、乾燥（クリーン）な状態を確認してからリモートを登録します。
+</Text>
+
+```bash
+# 現在の状態を確認
+git status
+
+# リモートを登録（URL は GitHub の "Quick setup" からコピー）
+git remote add origin https://github.com/your-account/ai-notes.git
+
+# 初回の push（main ブランチを公開）
+git push -u origin main
+```
+
+<Text className="mt-4">
+  <Code>-u</Code> オプションを付けると、次回以降は <Code>git push</Code> だけで OK になります。ブランチ名が <Code>master</Code> の場合はそのまま読み替えてください。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>4. リモートとの基本的なやり取り</Subheading>
+<Text className="mt-3">
+  接続ができたら、以下の3つの操作を覚えれば共同作業の第一歩は完了です。
+</Text>
+
+<ul className="mt-4 space-y-4 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>最新の変更を取り込む：</Strong> <Code>git pull</Code>
+    <Text className="mt-1">
+      他のメンバーが push した変更を自分のローカルに取り込みます。競合が起きた場合は Git ブランチ編で学んだ手順で解決します。
+    </Text>
+  </li>
+  <li>
+    <Strong>自分の変更を共有する：</Strong> <Code>git push</Code>
+    <Text className="mt-1">
+      コミットをリモートへ送ります。初回だけ <Code>git push -u origin main</Code>、2 回目以降は <Code>git push</Code> で大丈夫です。
+    </Text>
+  </li>
+  <li>
+    <Strong>新しくリポジトリを取得する：</Strong> <Code>git clone &lt;URL&gt;</Code>
+    <Text className="mt-1">
+      別の PC で作業したいときや、新しいメンバーが参加するときは GitHub 上の URL を指定してクローンします。
+    </Text>
+  </li>
+</ul>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>5. 誤って公開しないためのチェック</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>.gitignore</Strong> を確認：API キーや巨大ファイル（モデルやデータセット）が commit されないようにする
+  </li>
+  <li>
+    push 前に <Code>git status</Code> と <Code>git diff</Code> を確認：意図しない差分が含まれていないかを毎回チェック
+  </li>
+  <li>
+    機密情報を誤って push したら <TextLink href="https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository">公式手順</TextLink> を参考に早急に履歴を書き換える
+  </li>
+</ul>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>次のステップ</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>Pull Request を体験</Strong>：ブランチで変更した内容を GitHub 上でレビュー＆マージする流れを学ぶ
+  </li>
+  <li>
+    <Strong>Issues を活用</Strong>：TODO やバグをチームで共有し、対応状況を可視化する
+  </li>
+  <li>
+    <Strong>セキュリティ設定</Strong>：2 段階認証やブランチ保護ルールの設定も将来的には検討
+  </li>
+</ul>
+
+<Text className="mt-6">
+  GitHub を使い始めると、AI 開発でのコラボレーションが格段に楽になります。まずは push / pull / clone を確実にこなし、次に Pull Request や Issues などの便利機能へ進みましょう。
+</Text>
