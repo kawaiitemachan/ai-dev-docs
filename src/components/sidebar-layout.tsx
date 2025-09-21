@@ -45,24 +45,28 @@ function CourseNavigation({
   className?: string;
 }) {
   let pathname = usePathname();
-  let [openModules, setOpenModules] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(modules.map(({ id }) => [id, true])),
+  let extraSectionIds = EXTRA_NAVIGATION.map((section) =>
+    `extra-${section.title}`.replace(/\s+/g, "-"),
+  );
+  let sectionIds = [...modules.map(({ id }) => id), ...extraSectionIds];
+  let [openSections, setOpenSections] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(sectionIds.map((id) => [id, true])),
   );
 
   useEffect(() => {
-    setOpenModules((prev) => {
+    setOpenSections((prev) => {
       let next = { ...prev };
       let changed = false;
 
-      for (let module of modules) {
-        if (!(module.id in next)) {
-          next[module.id] = true;
+      for (let id of sectionIds) {
+        if (!(id in next)) {
+          next[id] = true;
           changed = true;
         }
       }
 
       for (let key of Object.keys(next)) {
-        if (!modules.some((module) => module.id === key)) {
+        if (!sectionIds.includes(key)) {
           delete next[key];
           changed = true;
         }
@@ -70,7 +74,7 @@ function CourseNavigation({
 
       return changed ? next : prev;
     });
-  }, [modules]);
+  }, [sectionIds.join("")]);
 
   return (
     <div className={clsx(className, "space-y-8")}>
@@ -79,10 +83,10 @@ function CourseNavigation({
           <button
             type="button"
             className="flex w-full items-center justify-between gap-2 text-left text-base/7 font-semibold text-pretty text-gray-950 sm:text-sm/6 dark:text-white"
-            aria-expanded={openModules[module.id] ?? true}
+            aria-expanded={openSections[module.id] ?? true}
             aria-controls={`module-${module.id}`}
             onClick={() =>
-              setOpenModules((prev) => ({
+              setOpenSections((prev) => ({
                 ...prev,
                 [module.id]: !(prev[module.id] ?? true),
               }))
@@ -90,15 +94,15 @@ function CourseNavigation({
           >
             <span>{module.title}</span>
             <span className="text-lg leading-none text-gray-600 transition-transform dark:text-gray-300">
-              {(openModules[module.id] ?? true) ? "-" : "+"}
+              {(openSections[module.id] ?? true) ? "-" : "+"}
             </span>
           </button>
           <ul
             id={`module-${module.id}`}
-            data-open={openModules[module.id] ?? true ? "" : undefined}
+            data-open={openSections[module.id] ?? true ? "" : undefined}
             className={clsx(
               "mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400",
-              !(openModules[module.id] ?? true) && "hidden",
+              !(openSections[module.id] ?? true) && "hidden",
             )}
           >
             {module.lessons.map((lesson) => (
@@ -125,34 +129,59 @@ function CourseNavigation({
           </ul>
         </div>
       ))}
-      {EXTRA_NAVIGATION.map((section) => (
-        <div key={section.title}>
-          <h2 className="text-base/7 font-semibold text-pretty text-gray-950 sm:text-sm/6 dark:text-white">
-            {section.title}
-          </h2>
-          <ul className="mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400">
-            {section.links.map((link) => (
-              <li
-                key={link.href}
-                className={clsx(
-                  "-ml-px flex border-l border-transparent pl-4",
-                  "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
-                  "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
-                )}
-              >
-                <Link
-                  href={link.href}
-                  aria-current={link.href === pathname ? "page" : undefined}
-                  onNavigate={onNavigate}
-                  className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
+      {EXTRA_NAVIGATION.map((section) => {
+        let sectionId = `extra-${section.title}`.replace(/\s+/g, "-");
+
+        return (
+          <div key={section.title}>
+            <button
+              type="button"
+              className="flex w-full items-center justify-between gap-2 text-left text-base/7 font-semibold text-pretty text-gray-950 sm:text-sm/6 dark:text-white"
+              aria-expanded={openSections[sectionId] ?? true}
+              aria-controls={`module-${sectionId}`}
+              onClick={() =>
+                setOpenSections((prev) => ({
+                  ...prev,
+                  [sectionId]: !(prev[sectionId] ?? true),
+                }))
+              }
+            >
+              <span>{section.title}</span>
+              <span className="text-lg leading-none text-gray-600 transition-transform dark:text-gray-300">
+                {(openSections[sectionId] ?? true) ? "-" : "+"}
+              </span>
+            </button>
+            <ul
+              id={`module-${sectionId}`}
+              data-open={openSections[sectionId] ?? true ? "" : undefined}
+              className={clsx(
+                "mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400",
+                !(openSections[sectionId] ?? true) && "hidden",
+              )}
+            >
+              {section.links.map((link) => (
+                <li
+                  key={link.href}
+                  className={clsx(
+                    "-ml-px flex border-l border-transparent pl-4",
+                    "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
+                    "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
+                  )}
                 >
-                  {link.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+                  <Link
+                    href={link.href}
+                    aria-current={link.href === pathname ? "page" : undefined}
+                    onNavigate={onNavigate}
+                    className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
+                  >
+                    {link.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
     </div>
   );
 }
