@@ -71,6 +71,22 @@ const lessons: Module[] = [
     ],
   },
   {
+    id: "ai-fundamentals",
+    category: "AI開発必須知識",
+    title: "AI開発必須知識",
+    description:
+      "AI開発に取り組む前に押さえておきたい基礎概念・設計指針・リスク管理を体系的に整理します。",
+    lessons: [
+      {
+        id: "git-basics-for-ai",
+        title: "AI開発に最低限必要なGitの超基礎",
+        description:
+          "Git未経験でも履歴を残す・戻す・整えるが分かる実践ガイド。",
+        video: null,
+      },
+    ],
+  },
+  {
     id: "ai-services",
     category: "最新AIサービス",
     title: "最新AIサービス セットアップ＆活用",

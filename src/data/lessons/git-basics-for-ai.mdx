@@ -1,0 +1,250 @@
+---
+---
+
+import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
+import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
+import { Divider } from "@catalyst-ui-kit/typescript/divider";
+
+<Heading level={1}>AI開発に最低限必要なGitの超基礎</Heading>
+<Text>
+  AI開発の現場では、プロンプトやコード、ドキュメントの変更履歴を安全に残せるかどうかが信頼の分かれ目になります。このページでは「Gitを触ったことがない」状態から、変更を記録し、間違いを戻し、安心して作業できるレベルまでを最短ルートで体験します。
+</Text>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs/5 font-semibold text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-emerald-300/30">
+  更新日: 2025/09/21
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>この記事でできるようになること</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>Git</Strong> と <Strong>GitHub</Strong> の役割を切り分けて理解する
+  </li>
+  <li>
+    変更の確認 → 記録 → やり直しの基本サイクルを <Code>git status</Code> / <Code>git add</Code> / <Code>git commit</Code> / <Code>git restore</Code> で体験する
+  </li>
+  <li>
+    小さなブランチを切り替えながら安全に試す方法を知る
+  </li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>インストールと初期設定</Subheading>
+<Text className="mt-3">
+  ここでは OS ごとのインストール方法と、最初に必須となる設定をまとめて押さえます。すでに Git を使っている方は「3. 動作確認と初期設定」だけ確認すれば大丈夫です。
+</Text>
+
+#### 1. Windows の場合
+<Text className="mt-3">
+  公式インストーラーから導入するのが最も簡単です。次の手順に従って進めましょう。
+</Text>
+
+1. <TextLink href="https://git-scm.com/download/win">Git for Windows ダウンロードページ</TextLink>を開く
+2. 自動ダウンロードされた <Code>.exe</Code> を実行し、ウィザードを最後まで進める（基本的に既定値のままで OK）
+3. インストール後は<Strong>新しく</Strong>「Windows ターミナル」や「PowerShell」を開き直す
+
+<Text className="mt-4">
+  GUI で操作したい場合は <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> も合わせてインストールしておくと、後述のリモート連携がスムーズです。
+</Text>
+
+#### 2. macOS の場合
+<Text className="mt-3">
+  Homebrew を使う方法と、公式インストーラー（または Xcode Command Line Tools）を使う方法があります。好みのやり方で導入しましょう。
+</Text>
+
+- Homebrew 経由：
+
+```bash
+brew install git
+```
+
+- Homebrew を使わない場合：
+  - ターミナルで <Code>git</Code> と入力すると、Xcode Command Line Tools のインストール案内が表示されるので指示に従う
+  - または <TextLink href="https://git-scm.com/download/mac">公式インストーラー</TextLink>から <Code>.dmg</Code> をダウンロードして実行する
+
+<Text className="mt-4">
+  こちらも GUI を希望する方は <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> を導入しておくと、後の GitHub 連携が直感的になります。
+</Text>
+
+#### 3. 動作確認と初期設定（全 OS 共通）
+
+```bash
+# 1. Git がインストールされているか確認
+git --version
+
+# 2. コミットに表示されるユーザー情報を設定（初回のみ）
+git config --global user.name "あなたの名前"
+git config --global user.email "you@example.com"
+
+# 3. 設定内容を確認
+git config --global --list
+```
+
+<Text className="mt-4">
+  バージョン番号が表示されればインストール成功です。GUI ツールでもこの設定が共有されるため、必ず自分の名前とメールアドレスに置き換えておきましょう。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>ローカル編①：超基礎サイクル</Subheading>
+
+#### 1. Git リポジトリを用意する
+<Text>
+  既存のプロジェクトなら、フォルダ内で <Code>git status</Code> を実行して Git 管理下かどうか確認します。新規で試す場合は空フォルダを作り、以下を実行しましょう。
+</Text>
+
+```bash
+mkdir git-intro && cd git-intro
+# 既存フォルダなら cd のみでOK
+
+git init
+```
+
+<Text className="mt-4">
+  実行後に <Code>.git</Code> という隠しフォルダができれば準備完了です。
+</Text>
+
+#### 2. 変更前に状況を把握する：<Code>git status</Code>
+<Text>
+  Git は「何が変わったか」を常に教えてくれます。作業前後でこまめに <Code>git status</Code> を叩く癖をつけましょう。
+</Text>
+
+```bash
+git status
+```
+
+<Text className="mt-4">
+  新規ファイルを作成すると「Untracked files」と表示されます。例として <Code>notes.txt</Code> を作り、1行テキストを書き込んでみてください。
+</Text>
+
+```bash
+echo "はじめてのGitメモ" > notes.txt
+```
+
+#### 3. 変更をステージする：<Code>git add</Code>
+<Text>
+  Git では「ステージング」という待機列に変更を並べてから、まとめて記録します。対象ファイルを指定して <Code>git add</Code> を実行しましょう。
+</Text>
+
+```bash
+git add notes.txt
+```
+
+<Text className="mt-4">
+  直後に <Code>git status</Code> を再度実行すると、<Strong>Changes to be committed</Strong> に移ることが確認できます。ステージから外したい場合は <Code>git restore --staged notes.txt</Code> でやり直せます。
+</Text>
+
+#### 4. 履歴を確定する：<Code>git commit</Code>
+<Text>
+  ステージされた変更は <Code>git commit</Code> で履歴に残します。メッセージは「何をしたのか」が後から分かるように短い文章で書きます。
+</Text>
+
+```bash
+git commit -m "docs: add first note"
+```
+
+<Text className="mt-4">
+  成功すると「[main (root-commit) ...] docs: add first note」といったメッセージが表示されます。履歴は <Code>git log --oneline</Code> で一覧できます。
+</Text>
+
+#### 5. 間違った変更を戻す：<Code>git restore</Code>
+<Text>
+  まだコミットしていない変更を取り消したいときは <Code>git restore</Code> を使います。ファイルごとに元の状態へ戻せます。
+</Text>
+
+```bash
+# ファイル内容を直前のコミット時点に戻す
+git restore notes.txt
+
+# ステージされた状態だけを解除する（内容は保持）
+git restore --staged notes.txt
+```
+
+<Text className="mt-4">
+  「コミット後に戻したい」場合は別のコマンドが必要ですが、まずはコミット前のリカバリーを確実にできるようにしましょう。慌てず <Code>git status</Code> で現状を見ながら進めるのが鉄則です。
+</Text>
+
+#### 6. ミニ演習：1コミットを完走する
+<Text className="mt-4">
+  以下の流れを 2 回繰り返して、変更を残す感覚を掴みましょう。
+</Text>
+
+1. <Code>notes.txt</Code> に行を追加 → <Code>git status</Code>
+2. <Code>git add notes.txt</Code> → <Code>git commit -m "docs: update notes with ..."</Code>
+3. 不要な変更が混ざったら <Code>git restore</Code> で戻す
+
+<Text className="mt-6">
+  ここまでできれば「変更を積み上げる」「不要な変更を外す」「履歴を残す」が一通り体験できました。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>ローカル編②：ブランチ入門</Subheading>
+<Text className="mt-3">
+  ブランチは「作業用の分岐ライン」です。AI プロジェクトでは試行錯誤が多いため、メインの履歴を守りながら自由に実験できるブランチ運用が役立ちます。
+</Text>
+
+#### 1. ブランチを作って移動する
+
+```bash
+# main から新しいブランチを作りつつ切り替え
+git switch -c feature/update-prompt
+```
+
+<Text className="mt-4">
+  ここで行った変更は <Code>main</Code> には影響しません。作業が終わったら <Code>git status</Code> → <Code>git add</Code> → <Code>git commit</Code> でまとめ、メインへ戻りましょう。
+</Text>
+
+```bash
+git switch main
+```
+
+#### 2. 変更をメインに取り込む
+<Text>
+  ブランチでコミットした内容をメインへ反映するには <Code>git merge</Code> を使います。単純な変更であれば自動的に反映されます。
+</Text>
+
+```bash
+git merge feature/update-prompt
+```
+
+<Text className="mt-4">
+  競合（Conflict）が出た場合は、Git が該当ファイルをマークします。落ち着いて該当箇所を修正し、再度 <Code>git add</Code> → <Code>git commit</Code> すれば解決できます。慣れるまでは小さな変更ごとにブランチを作ると安心です。
+</Text>
+
+#### 3. 使い終わったブランチを片付ける
+
+```bash
+git branch -d feature/update-prompt
+```
+
+<Text className="mt-4">
+  片付けておくと、ブランチ一覧が整理され次の作業に集中できます。もし未マージのコミットが残っていると削除できないので、その際はマージまたは破棄を検討してください。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>Git と GitHub をどう切り分けるか</Subheading>
+<Text className="mt-3">
+  Git はローカルの履歴管理ツール、GitHub はインターネット上でリポジトリを共有するサービスです。まずは Git だけで基本サイクルを身につけ、慣れてきたら GitHub にリモートリポジトリを作り <Code>git remote add origin ...</Code> → <Code>git push -u origin main</Code> と進めましょう。ローカルでの安心感が GitHub での共同作業につながります。
+</Text>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>次のステップ</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>演習</Strong>：別ファイル（例：<Code>prompt-plan.md</Code>）を作り、コミット → ブランチで編集 → マージまでを復習
+  </li>
+  <li>
+    <Strong>GitHub 連携</Strong>：<TextLink href="https://docs.github.com/ja/get-started">GitHub 入門ガイド</TextLink> を参考に、リモートへプッシュする練習をする
+  </li>
+  <li>
+    <Strong>覚えておきたい次のコマンド</Strong>：<Code>git diff</Code>（差分確認）、<Code>git log --graph</Code>（ブランチの流れを見る）
+  </li>
+</ul>
+
+<Text className="mt-6">
+  ここで紹介したステップを何度か繰り返すだけで、AI 開発の現場で求められる「履歴を安全に扱える人」へ大きく近づきます。わからないことがあれば <TextLink href="https://git-scm.com/docs">公式ドキュメント</TextLink> をチートシートのように参照しながら、着実にステップアップしていきましょう。
+</Text>
