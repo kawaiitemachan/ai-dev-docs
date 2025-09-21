@@ -48,11 +48,11 @@ export async function getLessonContent(slug: string) {
 
 const lessons: Module[] = [
   {
-    id: "coding-agents",
-    category: "コーディングエージェント",
-    title: "コーディングエージェント",
+    id: "coding-agents-ide",
+    category: "コーディングエージェントとIDE",
+    title: "コーディングエージェントとIDE活用",
     description:
-      "ローカル/ターミナルで動く生成AIのコーディング支援ツール群。導入と基本操作、ベストプラクティスをまとめます。",
+      "ローカル/ターミナルのAIコーディング支援ツールから、IDE統合型アシストまでをまとめて解説します。",
     lessons: [
       {
         id: "claude-code-setup",
@@ -106,14 +106,6 @@ const lessons: Module[] = [
     title: "最新AIサービス セットアップ＆活用",
     description:
       "主要AIプラットフォームの特徴と導入・比較・ユースケースをまとめます。",
-    lessons: [],
-  },
-  {
-    id: "ai-ide",
-    category: "AI統合型IDE",
-    title: "AI統合IDEの使いこなし",
-    description:
-      "VS Code/JetBrains系のAIアシストや拡張の導入・活用ベストプラクティス。",
     lessons: [],
   },
 ];

@@ -13,7 +13,7 @@ import { clsx } from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Navbar } from "./navbar";
 
 export const SidebarContext = createContext<{
@@ -45,15 +45,62 @@ function CourseNavigation({
   className?: string;
 }) {
   let pathname = usePathname();
+  let [openModules, setOpenModules] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(modules.map(({ id }) => [id, true])),
+  );
+
+  useEffect(() => {
+    setOpenModules((prev) => {
+      let next = { ...prev };
+      let changed = false;
+
+      for (let module of modules) {
+        if (!(module.id in next)) {
+          next[module.id] = true;
+          changed = true;
+        }
+      }
+
+      for (let key of Object.keys(next)) {
+        if (!modules.some((module) => module.id === key)) {
+          delete next[key];
+          changed = true;
+        }
+      }
+
+      return changed ? next : prev;
+    });
+  }, [modules]);
 
   return (
     <div className={clsx(className, "space-y-8")}>
       {modules.map((module) => (
         <div key={module.id}>
-          <h2 className="text-base/7 font-semibold text-pretty text-gray-950 sm:text-sm/6 dark:text-white">
-            {module.title}
-          </h2>
-          <ul className="mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400">
+          <button
+            type="button"
+            className="flex w-full items-center justify-between gap-2 text-left text-base/7 font-semibold text-pretty text-gray-950 sm:text-sm/6 dark:text-white"
+            aria-expanded={openModules[module.id] ?? true}
+            aria-controls={`module-${module.id}`}
+            onClick={() =>
+              setOpenModules((prev) => ({
+                ...prev,
+                [module.id]: !(prev[module.id] ?? true),
+              }))
+            }
+          >
+            <span>{module.title}</span>
+            <span className="text-lg leading-none text-gray-600 transition-transform dark:text-gray-300">
+              {(openModules[module.id] ?? true) ? "-" : "+"}
+            </span>
+          </button>
+          <ul
+            id={`module-${module.id}`}
+            data-open={openModules[module.id] ?? true ? "" : undefined}
+            className={clsx(
+              "mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400",
+              !(openModules[module.id] ?? true) && "hidden",
+            )}
+          >
             {module.lessons.map((lesson) => (
               <li
                 key={lesson.id}
