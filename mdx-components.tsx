@@ -79,6 +79,10 @@ const IMAGE_DIMENSION_REGEX = /^[^|]+\|\d+x\d+$/;
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
+    p: ({ children }) => {
+      // MDX内で自動生成される<p>タグをdivに変換して、Textコンポーネントとの競合を防ぐ
+      return <div className="mb-4">{children}</div>;
+    },
     h1: ({ children }) => {
       let text = getTextContent(children);
       let id = generateId(text);

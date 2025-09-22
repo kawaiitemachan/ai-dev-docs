@@ -220,18 +220,18 @@
 
   pre {
     border-radius: var(--radius-lg);
-    padding: --spacing(3) --spacing(4);
+    padding: 0.75rem 1rem;
     overflow-x: auto;
 
     > code {
       display: block;
       font-size: var(--text-sm);
-      line-height: --spacing(5);
+      line-height: 1.25rem;
       color: var(--color-white);
     }
 
     &::selection {
-      background-color: --alpha(var(--color-white) / 15%);
+      background-color: rgb(255 255 255 / 0.15);
     }
   }
 
@@ -240,16 +240,12 @@
     position: relative;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
   }
 
   /* Code copy wrapper 内のpreタグ */
   .code-copy-wrapper pre {
     margin: 0;
-    padding-right: 5rem;
-    overflow-x: auto;
-    border-radius: 0;
+    padding-right: 4.5rem;
   }
 
   /* コピーボタン */
