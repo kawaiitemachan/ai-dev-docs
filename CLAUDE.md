@@ -63,3 +63,6 @@ npm run format
 - レベル2見出しは `prose-heading prose-heading-lg`、レベル3見出しは `prose-heading prose-heading-step` が自動付与されます。デザインは `src/app/typography.css` の `.prose-heading-*` で一元管理されるため、スタイル変更はここで実施してください。
 - 既存MDXで手動設定していた `border` / `bg-*` / `shadow` 等は削除済み。今後追加する際も **追加のユーティリティは余白 (`mt-*` など) のみ** に留めます。
 - レベル2見出しはスカイ（ブルー）系、レベル3見出しはインディゴ系のカードデザイン。カラーを変更する場合は `src/app/typography.css` の `.prose-heading-lg`／`.prose-heading-step` を更新し、全ドキュメントで統一すること。
+- 例え話・ストーリーテリングのボックスは `div.mt-3.analogy-card` を使用し、`src/app/typography.css` に定義した共通スタイル（アンバー系配色）に従うこと。個別の `border` や `bg-*` クラスは付けない。
+- 新しい記事やセクションを作成する前に、本ファイルのスタイルガイドと `src/app/typography.css` のテンプレート定義を必ず確認し、既存デザインから逸脱しないようにする。
+- 外部リンクはデフォルトで新規タブを開くよう `Link` コンポーネント（`catalyst-ui-kit/typescript/link.tsx`）で制御しています。生の `<a>` を使う場合も `target="_blank" rel="noopener noreferrer"` を付与してください。

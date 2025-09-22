@@ -1,0 +1,74 @@
+---
+---
+
+import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
+import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
+import { Divider } from "@catalyst-ui-kit/typescript/divider";
+
+<Heading level={1}>Git基礎1：なぜ必要なのか？</Heading>
+<Text>
+  このページではコマンドを一切使わずに、Git がどんな場面で役に立つのかをイメージで理解します。AI 開発でよくある「モデルやスクリプトが急に壊れた」「AI エージェントが予想外の修正を入れた」といった状況でも、安心して戻れる準備を整えることがゴールです。
+</Text>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs/5 font-semibold text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-emerald-300/30">
+  更新日: 2025/09/22
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>この記事でわかること</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>Git が解決する問題と「履歴管理ツール」としての役割</li>
+  <li>AI 開発で Git を使うメリット（生成AIとの共存を含む）</li>
+  <li>実務でありがちな失敗と、Git がどうリカバリーを助けるか</li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>Git が解決する課題</Subheading>
+<Text className="mt-3">
+  チームや個人でコードや資料を更新していると、「いつ」「誰が」「なぜ」この変更をしたのかを忘れてしまう瞬間が必ず訪れます。コピーを手動で残しておくやり方では、ファイル名がごちゃごちゃになり、必要なときに探し出せません。Git は変更の履歴を一覧でき、好きな時点に戻せるようにすることで、この混乱を防ぎます。
+</Text>
+<div className="mt-3 analogy-card" role="note">
+  たとえ: RPG のセーブポイントを思い出してください。難所に挑む前にセーブしておけば、負けても直前からやり直せます。Git はファイルの世界にセーブポイントを置いてくれるシステムです。
+</div>
+
+<Subheading level={2} className="mt-12">AI 開発と Git の相性</Subheading>
+<Text className="mt-3">
+  生成AIやオートメーションツールを使うと、数分で大量のコードや設定が書き換わります。便利な一方、<Strong>自分が意図しない変更</Strong>が紛れ込むリスクも高まります。Git でこまめに履歴を残しておけば、AI が提案した修正を検証しながら採用でき、必要なら数クリックで元に戻せます。
+</Text>
+<div className="mt-3 analogy-card" role="note">
+  たとえ: AI を頼れる仲間キャラだと思っても、ときには意図しないスキルを使ってしまいます。Git でこまめにセーブしておけば「最後の安全なセーブデータ」に戻れるので、安心して任務を続けられます。
+</div>
+
+<Text className="mt-4">
+  Git はブランチという「実験用の分岐」を簡単に扱えます。AI モデルのパラメータを大胆に変えるときでも、別の枝で試せば本番コードに影響を与えません。うまくいった案だけをメインに取り込むことで、速度と安全性を両立できます。
+</Text>
+
+<Subheading level={2} className="mt-12">ありがちな失敗と回避策</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>「昨日の動く状態に戻れない」</Strong> — Git は細かい単位で履歴を残せるので、直前の状態だけでなく、安定していた時点まで遡れます。
+  </li>
+  <li>
+    <Strong>「AI が書き換えた差分が読み切れない」</Strong> — 変更点が視覚化されるため、採用する部分と差し戻す部分を明確に判断できます。
+  </li>
+  <li>
+    <Strong>「複数人の作業がぶつかる」</Strong> — 履歴が基準になるため、誰が何を変えたかがすぐに分かり、トラブルの切り分けが容易です。
+  </li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>次に進む</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>Git基礎2：インストールと初期設定</Strong>（次の記事）：<TextLink href="/git-install">環境構築の手順</TextLink>を確認する
+  </li>
+  <li>
+    <Strong>Git基礎3：変更を記録する超基礎サイクル</Strong>：履歴を残す操作を体験する
+  </li>
+</ul>
+
+<Text className="mt-6">
+  Git の考え方さえ掴んでおけば、コマンドや GUI 操作は自然と理解できます。次のステップでは、自分の環境に Git を導入して準備を整えましょう。
+</Text>

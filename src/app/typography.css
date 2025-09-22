@@ -1,10 +1,10 @@
 .prose {
-  color: var(--color-gray-700);
+  color: var(--color-gray-900);
   font-size: var(--text-sm);
   line-height: --spacing(7);
 
   @variant dark {
-    color: var(--color-gray-400);
+    color: var(--color-gray-200);
   }
 
   * + * {
@@ -138,6 +138,20 @@
       @variant dark {
         background: var(--color-indigo-300);
       }
+    }
+  }
+
+  .analogy-card {
+    border-radius: var(--radius-lg);
+    border: solid 1px --alpha(var(--color-amber-500) / 45%);
+    background-color: --alpha(var(--color-amber-500) / 15%);
+    padding: --spacing(2.5);
+    color: var(--color-amber-900);
+
+    @variant dark {
+      border-color: --alpha(var(--color-amber-300) / 55%);
+      background-color: --alpha(var(--color-amber-300) / 20%);
+      color: var(--color-amber-100);
     }
   }
 

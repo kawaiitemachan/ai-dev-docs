@@ -5,7 +5,7 @@ import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
 import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
 import { Divider } from "@catalyst-ui-kit/typescript/divider";
 
-<Heading level={1}>Git基礎：インストールと初期設定</Heading>
+<Heading level={1}>Git基礎2：インストールと初期設定</Heading>
 <Text>
   Git をこれから触り始める方向けに、Windows / macOS での導入から初期設定までを 1 ページにまとめました。環境構築が済んだら「変更を記録する超基礎サイクル」編にスムーズに進めます。
 </Text>
@@ -21,6 +21,17 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   <li><Code>git config --global</Code> でユーザー名とメールアドレスを設定する</li>
   <li><Code>git --version</Code> でインストール状況を確認できる</li>
 </ul>
+
+<div className="mt-4 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  予習 / リカバリー: Git がそもそも何をしてくれるのかを先に知りたい場合は、<TextLink href="/git-overview">Git基礎1：なぜ必要なのか？</TextLink> を先に読んでください。コマンド無しで役割とメリットを理解できます。
+</div>
+
+<Text className="mt-4">
+  そもそも Git はプロジェクトの「セーブポイント」を作る仕組みです。進めた内容をこまめに保存しておけば、思わぬトラブルが起きても直前の状態からやり直せます。
+</Text>
+<div className="mt-3 analogy-card" role="note">
+  たとえ: RPG のボス戦に挑む前にセーブするのと同じで、Git があればいつでも安全なセーブデータ（履歴）に戻れます。安心して試行錯誤できる土台だと考えてください。
+</div>
 
 <Divider soft className="my-10" />
 
@@ -46,6 +57,10 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Text className="mt-3">
   Homebrew を使う方法と、公式インストーラー（または Xcode Command Line Tools）を使う方法があります。お好みの方法で導入してください。
 </Text>
+
+<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  補足: <Strong>Homebrew</Strong> は macOS 用のパッケージ管理ツールです。ターミナルからアプリや開発ツールをまとめてインストール・更新できるので、Git や Node.js などを扱うときの土台になります。使ったことがない方でも、表示されるコマンドをそのままコピーして実行すれば OK です。
+</div>
 
 - Homebrew 経由：
 
@@ -87,7 +102,7 @@ git config --global --list
 <Subheading level={2}>次に進む</Subheading>
 <ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
   <li>
-    <Strong>Git基礎：変更を記録する超基礎サイクル</Strong>（次の記事）：<TextLink href="/git-basics">add / commit / restore の流れ</TextLink>を体験
+    <Strong>Git基礎3：変更を記録する超基礎サイクル</Strong>（次の記事）：<TextLink href="/git-basics">add / commit / restore の流れ</TextLink>を体験
   </li>
   <li>
     <Strong>Gitブランチ編</Strong>：分岐を作って安全に試すワークフローを学ぶ

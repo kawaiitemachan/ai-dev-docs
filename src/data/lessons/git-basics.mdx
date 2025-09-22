@@ -5,7 +5,7 @@ import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
 import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
 import { Divider } from "@catalyst-ui-kit/typescript/divider";
 
-<Heading level={1}>Git基礎：変更を記録する超基礎サイクル</Heading>
+<Heading level={1}>Git基礎3：変更を記録する超基礎サイクル</Heading>
 <Text>
   Git を触ったことがない状態から、変更を安全に記録し、いつでもやり直せるようになるまでの最短ルートをまとめました。環境構築が済んだら、このページで add / commit / restore の超基礎サイクルを一気に体験できます。
 </Text>
@@ -29,7 +29,7 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 </ul>
 
 <div className="mt-4 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
-  事前準備: Git のインストールと初期設定がまだの場合は、先にインストール編（<TextLink href="/git-install">Git基礎：インストールと初期設定</TextLink>）を完了してから読み進めるとスムーズです。
+  事前準備: Git の考え方から触れたい場合は <TextLink href="/git-overview">Git基礎1：なぜ必要なのか？</TextLink> を、環境構築がまだの場合は <TextLink href="/git-install">Git基礎2：インストールと初期設定</TextLink> を先に完了してから読み進めるとスムーズです。
 </div>
 
 <Divider soft className="my-10" />
@@ -43,7 +43,7 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Text className="mt-4">
   このサイクルでは <Strong>作業ツリー</Strong>（今のファイルの中身）と<Strong>ステージ</Strong>（記録待ちの変更）、<Strong>リポジトリ履歴</Strong>（これまでの記録）の 3 つを行き来します。位置関係を意識しながら進めましょう。
 </Text>
-<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+<div className="mt-3 analogy-card" role="note">
   たとえ: 作業ツリーは机の上のノート、ステージは提出前のフォルダ、リポジトリ履歴は提出ボックスと考えると、変更がどこにあるかイメージしやすくなります。
 </div>
 
@@ -71,7 +71,7 @@ git init
   Git は常に「今どんな変更があるのか」を教えてくれます。作業前後でこまめに <Code>git status</Code> を叩けば、思いがけない変更に早く気づけます。
 </Text>
 
-<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+<div className="mt-3 analogy-card" role="note">
   たとえ: <Code>git status</Code> は作業ノートに付箋を貼って「今はここを編集中」と確認するイメージです。頻繁に見返すほど迷子になりにくくなります。
 </div>
 
@@ -91,7 +91,7 @@ git status
   Git では「ステージング」という待機列に変更を並べ、まとめて記録します。対象ファイルを指定して <Code>git add</Code> を実行し、コミット候補に移しましょう。
 </Text>
 
-<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+<div className="mt-3 analogy-card" role="note">
   たとえ: <Code>git add</Code> はレジ前のカゴに商品を集めるような感覚です。カゴに入れたものだけが次の会計（コミット）に含まれます。
 </div>
 
@@ -108,7 +108,7 @@ git add notes.txt
   ステージされた変更は <Code>git commit</Code> で履歴に残します。メッセージは「何をしたのか」が後から分かるように短い文章で書きます。最初は「何を増やしたか・修正したか」をそのまま書けば十分です。
 </Text>
 
-<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+<div className="mt-3 analogy-card" role="note">
   たとえ: <Code>git commit</Code> はレジで会計してレシートを受け取る瞬間です。レシート（コミットメッセージ）があると後から「何を買ったか」がすぐ分かります。
 </div>
 
@@ -125,7 +125,7 @@ git commit -m "docs: add first note"
   まだコミットしていない変更を取り消したいときは <Code>git restore</Code> を使います。ファイルごとに元の状態へ戻せるので、実験的な変更も怖くありません。
 </Text>
 
-<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+<div className="mt-3 analogy-card" role="note">
   たとえ: <Code>git restore</Code> は鉛筆の書き間違いを消しゴムで消すイメージです。コミットという「清書」をする前なら、跡を残さず戻せます。
 </div>
 
