@@ -1,0 +1,99 @@
+---
+---
+
+import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
+import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
+import { Divider } from "@catalyst-ui-kit/typescript/divider";
+
+<Heading level={1}>Git基礎：インストールと初期設定</Heading>
+<Text>
+  Git をこれから触り始める方向けに、Windows / macOS での導入から初期設定までを 1 ページにまとめました。環境構築が済んだら「変更を記録する超基礎サイクル」編にスムーズに進めます。
+</Text>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs/5 font-semibold text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-emerald-300/30">
+  更新日: 2025/09/22
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>この記事でできるようになること</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>Windows / macOS で Git をインストールする</li>
+  <li><Code>git config --global</Code> でユーザー名とメールアドレスを設定する</li>
+  <li><Code>git --version</Code> でインストール状況を確認できる</li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>インストールと初期設定</Subheading>
+<Text className="mt-3">
+  OS ごとのインストール手順と、初回に必ず行う設定の 2 ステップで進めます。どちらの OS も GUI ツールを併用する場合は GitHub Desktop を一緒に入れておくと学習がスムーズです。
+</Text>
+
+<Subheading level={3} className="mt-8">1. Windows の場合</Subheading>
+<Text className="mt-3">
+  公式インストーラーを利用するのが最も手軽です。以下の手順で導入しましょう。
+</Text>
+
+1. <TextLink href="https://git-scm.com/download/win">Git for Windows ダウンロードページ</TextLink>を開く
+2. 自動ダウンロードされた <Code>.exe</Code> を実行し、ウィザードを最後まで進める（基本的に既定値のままで OK）
+3. インストール後は<Strong>新しく</Strong>「Windows ターミナル」や「PowerShell」を開き直す
+
+<Text className="mt-4">
+  コマンドに不安があれば、GUI で操作できる <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> も合わせてインストールしておくと、後述の GitHub 編へ進むときに迷いにくくなります。
+</Text>
+
+<Subheading level={3} className="mt-10">2. macOS の場合</Subheading>
+<Text className="mt-3">
+  Homebrew を使う方法と、公式インストーラー（または Xcode Command Line Tools）を使う方法があります。お好みの方法で導入してください。
+</Text>
+
+- Homebrew 経由：
+
+```bash
+brew install git
+```
+
+- Homebrew を使わない場合：
+  - ターミナルで <Code>git</Code> と入力すると、Xcode Command Line Tools のインストール案内が表示されるので指示に従う
+  - または <TextLink href="https://git-scm.com/download/mac">公式インストーラー</TextLink>から <Code>.dmg</Code> をダウンロードして実行する
+
+<Text className="mt-4">
+  GUI 派の方も <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> を導入しておくと、コマンドとの対応関係を視覚的に確認できます。
+</Text>
+
+<Subheading level={3} className="mt-10">3. 動作確認と初期設定（全 OS 共通）</Subheading>
+<Text className="mt-3">
+  インストールが終わったら、ターミナルを開き直して次のコマンドを順に実行します。
+</Text>
+
+```bash
+# Git がインストールされているか確認
+git --version
+
+# コミットに表示されるユーザー情報を設定（初回のみ）
+git config --global user.name "あなたの名前"
+git config --global user.email "you@example.com"
+
+# 設定内容を確認
+git config --global --list
+```
+
+<Text className="mt-4">
+  バージョン番号が表示されればインストール成功です。ユーザー名とメールアドレスはコミット履歴に残るため、必ず自分の情報に置き換えてください。GUI ツールでもこの設定が共有されます。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>次に進む</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>Git基礎：変更を記録する超基礎サイクル</Strong>（次の記事）：<TextLink href="/git-basics">add / commit / restore の流れ</TextLink>を体験
+  </li>
+  <li>
+    <Strong>Gitブランチ編</Strong>：分岐を作って安全に試すワークフローを学ぶ
+  </li>
+</ul>
+
+<Text className="mt-6">
+  インストールで困った場合は <TextLink href="https://git-scm.com/docs">公式ドキュメント</TextLink> を合わせて確認しながら進めましょう。
+</Text>

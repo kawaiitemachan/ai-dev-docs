@@ -56,3 +56,10 @@ npm run format
 新しいインタビュー:
 1. `/src/data/interviews.ts`にメタデータ追加
 2. `/src/data/interviews/[slug].mdx`ファイル作成
+
+## ドキュメントスタイルガイド（共通ルール）
+
+- `Subheading` コンポーネント（`catalyst-ui-kit/typescript/heading.tsx`）は **レベル2 / 3 の見出しデザインを自動適用**します。`className` で余白を補正する場合も、背景色や枠線を個別指定しないこと。
+- レベル2見出しは `prose-heading prose-heading-lg`、レベル3見出しは `prose-heading prose-heading-step` が自動付与されます。デザインは `src/app/typography.css` の `.prose-heading-*` で一元管理されるため、スタイル変更はここで実施してください。
+- 既存MDXで手動設定していた `border` / `bg-*` / `shadow` 等は削除済み。今後追加する際も **追加のユーティリティは余白 (`mt-*` など) のみ** に留めます。
+- レベル2見出しはスカイ（ブルー）系、レベル3見出しはインディゴ系のカードデザイン。カラーを変更する場合は `src/app/typography.css` の `.prose-heading-lg`／`.prose-heading-step` を更新し、全ドキュメントで統一すること。

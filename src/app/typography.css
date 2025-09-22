@@ -63,17 +63,6 @@
     font-weight: var(--font-weight-semibold);
     margin-top: --spacing(16);
     scroll-margin-top: --spacing(20);
-    border-left: solid 3px var(--color-cyan-500);
-    /* 視覚中央にくるよう上下はわずかに非対称 */
-    padding: --spacing(1.25) --spacing(2.5) --spacing(1.75);
-    padding-left: --spacing(3.5);
-    border-radius: var(--radius-lg);
-    background-color: --alpha(var(--color-cyan-500) / 6%);
-
-    @variant dark {
-      border-left-color: var(--color-cyan-400);
-      background-color: --alpha(var(--color-cyan-400) / 8%);
-    }
   }
 
   h3 {
@@ -83,15 +72,72 @@
     font-weight: var(--font-weight-semibold);
     margin-top: --spacing(12);
     scroll-margin-top: --spacing(20);
-    border-left: solid 2px var(--color-cyan-400);
-    padding: --spacing(1) --spacing(2) --spacing(1.5);
-    padding-left: --spacing(3);
-    border-radius: var(--radius-lg);
-    background-color: --alpha(var(--color-cyan-400) / 5%);
+  }
+
+  .prose-heading {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  .prose-heading-lg {
+    position: relative;
+    border-radius: calc(var(--radius-xl));
+    border: solid 1.5px --alpha(var(--color-sky-500) / 45%);
+    background-color: --alpha(var(--color-sky-500) / 12%);
+    padding: --spacing(1.5) --spacing(3.5);
+    padding-inline-start: --spacing(4.5);
+    box-shadow: 0 10px 28px --alpha(var(--color-sky-500) / 12%);
 
     @variant dark {
-      border-left-color: var(--color-cyan-300);
-      background-color: --alpha(var(--color-cyan-300) / 7%);
+      border-color: --alpha(var(--color-sky-300) / 55%);
+      background-color: --alpha(var(--color-sky-300) / 18%);
+      box-shadow: 0 10px 28px --alpha(var(--color-sky-300) / 18%);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: --spacing(1.25);
+      inset-inline-start: --spacing(1.75);
+      width: --spacing(0.6);
+      border-radius: 999px;
+      background: var(--color-sky-500);
+
+      @variant dark {
+        background: var(--color-sky-300);
+      }
+    }
+  }
+
+  .prose-heading-step {
+    position: relative;
+    border-left: none;
+    border-radius: calc(var(--radius-lg) * 1.05);
+    border: solid 1.5px --alpha(var(--color-indigo-500) / 40%);
+    background-color: --alpha(var(--color-indigo-500) / 12%);
+    padding: --spacing(1.25) --spacing(3);
+    padding-left: --spacing(4);
+    box-shadow: 0 8px 24px --alpha(var(--color-indigo-500) / 12%);
+
+    @variant dark {
+      border-color: --alpha(var(--color-indigo-300) / 55%);
+      background-color: --alpha(var(--color-indigo-300) / 18%);
+      box-shadow: 0 6px 20px --alpha(var(--color-indigo-300) / 20%);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: --spacing(1);
+      inset-inline-start: --spacing(1.5);
+      width: --spacing(0.5);
+      border-radius: 999px;
+      background: var(--color-indigo-500);
+
+      @variant dark {
+        background: var(--color-indigo-300);
+      }
     }
   }
 

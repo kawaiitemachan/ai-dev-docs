@@ -5,9 +5,9 @@ import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
 import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
 import { Divider } from "@catalyst-ui-kit/typescript/divider";
 
-<Heading level={1}>Git基礎：インストールと記録の基本</Heading>
+<Heading level={1}>Git基礎：変更を記録する超基礎サイクル</Heading>
 <Text>
-  Git を触ったことがない状態から、変更を安全に記録し、いつでもやり直せるようになるまでの最短ルートをまとめました。AI 開発のコードやプロンプト、設定ファイルを守るための「最低限ここだけ」はこのページで完結します。
+  Git を触ったことがない状態から、変更を安全に記録し、いつでもやり直せるようになるまでの最短ルートをまとめました。環境構築が済んだら、このページで add / commit / restore の超基礎サイクルを一気に体験できます。
 </Text>
 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs/5 font-semibold text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-emerald-300/30">
   更新日: 2025/09/21
@@ -18,81 +18,42 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Subheading level={2}>この記事でできるようになること</Subheading>
 <ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
   <li>
-    Windows / macOS で Git をインストールし、ユーザー情報を設定できる
+    <Code>git status</Code> で変更点を把握し、作業の現在地を確認できる
   </li>
   <li>
-    <Code>git status</Code> → <Code>git add</Code> → <Code>git commit</Code> の一連の流れを理解する
+    <Code>git add</Code> → <Code>git commit</Code> で変更を安全に記録する流れを理解する
   </li>
   <li>
     うっかりした変更を <Code>git restore</Code> で元に戻し、安心して作業を続けられる
   </li>
 </ul>
 
+<div className="mt-4 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  事前準備: Git のインストールと初期設定がまだの場合は、先にインストール編（<TextLink href="/git-install">Git基礎：インストールと初期設定</TextLink>）を完了してから読み進めるとスムーズです。
+</div>
+
 <Divider soft className="my-10" />
 
-<Subheading level={2}>インストールと初期設定</Subheading>
-<Text className="mt-3">
-  ここでは OS ごとのインストール方法と、最初に必須となる設定をまとめて押さえます。すでに Git を使っている方は「3. 動作確認と初期設定」だけ確認すれば大丈夫です。
-</Text>
 
-#### 1. Windows の場合
-<Text className="mt-3">
-  公式インストーラーから導入するのが最も簡単です。次の手順に従って進めましょう。
-</Text>
-
-1. <TextLink href="https://git-scm.com/download/win">Git for Windows ダウンロードページ</TextLink>を開く
-2. 自動ダウンロードされた <Code>.exe</Code> を実行し、ウィザードを最後まで進める（基本的に既定値のままで OK）
-3. インストール後は<Strong>新しく</Strong>「Windows ターミナル」や「PowerShell」を開き直す
-
-<Text className="mt-4">
-  GUI で操作したい場合は <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> も合わせてインストールしておくと、後述の GitHub 編がスムーズです。
-</Text>
-
-#### 2. macOS の場合
-<Text className="mt-3">
-  Homebrew を使う方法と、公式インストーラー（または Xcode Command Line Tools）を使う方法があります。好みのやり方で導入しましょう。
-</Text>
-
-- Homebrew 経由：
-
-```bash
-brew install git
-```
-
-- Homebrew を使わない場合：
-  - ターミナルで <Code>git</Code> と入力すると、Xcode Command Line Tools のインストール案内が表示されるので指示に従う
-  - または <TextLink href="https://git-scm.com/download/mac">公式インストーラー</TextLink>から <Code>.dmg</Code> をダウンロードして実行する
-
-<Text className="mt-4">
-  GUI 派の方も <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> を導入しておけば、後からコマンドと並行して操作を確認できます。
-</Text>
-
-#### 3. 動作確認と初期設定（全 OS 共通）
-
-```bash
-# 1. Git がインストールされているか確認
-git --version
-
-# 2. コミットに表示されるユーザー情報を設定（初回のみ）
-git config --global user.name "あなたの名前"
-git config --global user.email "you@example.com"
-
-# 3. 設定内容を確認
-git config --global --list
-```
-
-<Text className="mt-4">
-  バージョン番号が表示されればインストール成功です。GUI ツールでもこの設定が共有されるため、必ず自分の名前とメールアドレスに置き換えておきましょう。
-</Text>
-
-<Divider className="my-12" />
 
 <Subheading level={2}>変更を記録する超基礎サイクル</Subheading>
 <Text className="mt-3">
-  ここからは実際にファイルを触りながら「現在の状態を確認 → 変更を並べる → 履歴に残す → やり直す」の流れを体験します。コマンドはすべてコピー＆ペーストで進められます。
+  ここからは実際にファイルを触りながら「現在の状態を確認 → 変更を並べる → 履歴に残す → やり直す」の 1 周を体験します。各ステップで何をしているかが分かれば、最小構成のチーム開発や個人プロジェクトでも迷いにくくなります。
 </Text>
+<Text className="mt-4">
+  このサイクルでは <Strong>作業ツリー</Strong>（今のファイルの中身）と<Strong>ステージ</Strong>（記録待ちの変更）、<Strong>リポジトリ履歴</Strong>（これまでの記録）の 3 つを行き来します。位置関係を意識しながら進めましょう。
+</Text>
+<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  たとえ: 作業ツリーは机の上のノート、ステージは提出前のフォルダ、リポジトリ履歴は提出ボックスと考えると、変更がどこにあるかイメージしやすくなります。
+</div>
 
-#### 1. Git リポジトリを用意する
+<Subheading level={3} className="mt-10">1. Git リポジトリを用意する</Subheading>
+<Text className="mt-3">
+  作業用フォルダを作成し、その中で Git を初期化します。新しい学習用フォルダを作る想定ですが、既存プロジェクトでも同様です。
+</Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  補足: <Strong>mkdir</Strong> は「make directory」の略で新しいフォルダを作成します。<Strong>cd</Strong> は「change directory」で、操作するフォルダを切り替えるコマンドです。コマンドの間にある <Code>&amp;&amp;</Code> は、前の処理が成功したときだけ次を実行するシェルの連結記号です。
+</div>
 
 ```bash
 mkdir git-intro && cd git-intro
@@ -102,72 +63,84 @@ git init
 ```
 
 <Text className="mt-4">
-  実行後に <Code>.git</Code> という隠しフォルダができれば準備完了です。既存プロジェクトの場合は <Code>git status</Code> を実行して Git 管理下かどうか確認してください。
+  実行後に <Code>.git</Code> という隠しフォルダができれば準備完了です。既存プロジェクトの場合は <Code>git status</Code> を実行して、すでに Git 管理下かどうか確かめましょう。
 </Text>
 
-#### 2. 状態把握：<Code>git status</Code>
+<Subheading level={3} className="mt-10">2. 状態把握：<Code>git status</Code></Subheading>
 <Text>
-  Git は常に「何が変わったか」を教えてくれます。作業前後でこまめに <Code>git status</Code> を叩く癖をつけましょう。
+  Git は常に「今どんな変更があるのか」を教えてくれます。作業前後でこまめに <Code>git status</Code> を叩けば、思いがけない変更に早く気づけます。
 </Text>
+
+<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  たとえ: <Code>git status</Code> は作業ノートに付箋を貼って「今はここを編集中」と確認するイメージです。頻繁に見返すほど迷子になりにくくなります。
+</div>
 
 ```bash
 git status
 ```
 
 <Text className="mt-4">
-  新規ファイルを作成すると「Untracked files」と表示されます。例として <Code>notes.txt</Code> を作り、1 行テキストを書き込んでみてください。
+  新規ファイルを作成すると「Untracked files」と表示されます。例として <Code>notes.txt</Code> を作り、1 行テキストを書き込んでみてください。エディター（メモ帳、TextEdit、VS Code など）で保存するだけで十分です。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  補足: GUI やエディターでファイルを追加した直後でも <Code>git status</Code> は変化を検知します。ターミナル派であれば <Code>touch</Code>（空ファイルを作るコマンド）などを使って準備しても OK です。
+</div>
 
-```bash
-echo "はじめてのGitメモ" > notes.txt
-```
-
-#### 3. ステージング：<Code>git add</Code>
+<Subheading level={3} className="mt-10">3. ステージング：<Code>git add</Code></Subheading>
 <Text>
-  Git では「ステージング」という待機列に変更を並べてから、まとめて記録します。対象ファイルを指定して <Code>git add</Code> を実行しましょう。
+  Git では「ステージング」という待機列に変更を並べ、まとめて記録します。対象ファイルを指定して <Code>git add</Code> を実行し、コミット候補に移しましょう。
 </Text>
+
+<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  たとえ: <Code>git add</Code> はレジ前のカゴに商品を集めるような感覚です。カゴに入れたものだけが次の会計（コミット）に含まれます。
+</div>
 
 ```bash
 git add notes.txt
 ```
 
 <Text className="mt-4">
-  直後に <Code>git status</Code> を再度実行すると、<Strong>Changes to be committed</Strong> に移ることが確認できます。ステージから外したい場合は <Code>git restore --staged notes.txt</Code> でやり直せます。
+  直後に <Code>git status</Code> を再度実行すると、<Strong>Changes to be committed</Strong> に移ることが確認できます。
 </Text>
 
-#### 4. 履歴を確定する：<Code>git commit</Code>
+<Subheading level={3} className="mt-10">4. 履歴を確定する：<Code>git commit</Code></Subheading>
 <Text>
-  ステージされた変更は <Code>git commit</Code> で履歴に残します。メッセージは「何をしたのか」が後から分かるように短い文章で書きます。
+  ステージされた変更は <Code>git commit</Code> で履歴に残します。メッセージは「何をしたのか」が後から分かるように短い文章で書きます。最初は「何を増やしたか・修正したか」をそのまま書けば十分です。
 </Text>
+
+<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  たとえ: <Code>git commit</Code> はレジで会計してレシートを受け取る瞬間です。レシート（コミットメッセージ）があると後から「何を買ったか」がすぐ分かります。
+</div>
 
 ```bash
 git commit -m "docs: add first note"
 ```
 
 <Text className="mt-4">
-  成功すると「[main (root-commit) ...] docs: add first note」といったメッセージが表示されます。履歴は <Code>git log --oneline</Code> で一覧できます。
+  成功すると「[main (root-commit) ...] docs: add first note」といったメッセージが表示されます。履歴は <Code>git log --oneline</Code> で一覧でき、作業の節目を振り返るときに役立ちます。
 </Text>
 
-#### 5. やり直し：<Code>git restore</Code>
+<Subheading level={3} className="mt-10">5. やり直し：<Code>git restore</Code></Subheading>
 <Text>
   まだコミットしていない変更を取り消したいときは <Code>git restore</Code> を使います。ファイルごとに元の状態へ戻せるので、実験的な変更も怖くありません。
 </Text>
 
+<div className="mt-3 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
+  たとえ: <Code>git restore</Code> は鉛筆の書き間違いを消しゴムで消すイメージです。コミットという「清書」をする前なら、跡を残さず戻せます。
+</div>
+
 ```bash
 # ファイル内容を直前のコミット時点に戻す
 git restore notes.txt
-
-# ステージされた状態だけを解除する（内容は保持）
-git restore --staged notes.txt
 ```
 
 <Text className="mt-4">
   「コミット後に戻したい」場合は別のコマンドが必要ですが、まずはコミット前のリカバリーを確実にできるようにしましょう。慌てず <Code>git status</Code> で現状を見ながら進めるのが鉄則です。
 </Text>
 
-#### 6. ミニ演習：1 コミットを完走する
+<Subheading level={3} className="mt-10">6. ミニ演習：1 コミットを完走する</Subheading>
 <Text className="mt-4">
-  以下の流れを 2 回繰り返して、変更を残す感覚を掴みましょう。
+  以下の流れを 2 回繰り返して、変更を残す感覚を掴みましょう。段階ごとに <Code>git status</Code> を確認し、どの段に変更があるか意識できれば合格です。
 </Text>
 
 1. <Code>notes.txt</Code> に行を追加 → <Code>git status</Code>
@@ -177,6 +150,43 @@ git restore --staged notes.txt
 <Text className="mt-6">
   ここまでできれば、AI プロジェクトでも安心してファイルを編集・保存できる土台が整いました。次はブランチを使って安全に試せる環境を作りましょう。
 </Text>
+
+#### 図解で確認：作業ツリー → ステージ → 履歴
+<Text className="mt-3">
+  一連の流れを視覚で押さえておくと、迷ったときに「今どこにいるのか」がすぐ分かります。作業ツリー（ワーキングツリー）からステージ、そしてリポジトリ履歴へと変更が移動する様子を下図で押さえましょう。
+</Text>
+<div className="mt-4 rounded-xl border border-slate-200/80 bg-white/70 p-4 shadow-sm ring-1 ring-white/40 backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/50 dark:ring-white/10">
+  <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center">
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200">
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Step 1</p>
+      <p className="mt-2 font-semibold text-slate-800 dark:text-slate-100">作業ツリー（作業中のファイル）</p>
+      <p className="mt-2 leading-6">テキストエディターで書き換えた直後の状態です。まだ履歴には入っておらず、いつでも編集し直せます。</p>
+      <p className="mt-3 text-xs font-mono text-emerald-600 dark:text-emerald-300"><Code>git add notes.txt</Code></p>
+    </div>
+    <div className="hidden justify-center md:flex" aria-hidden="true">
+      <span className="text-lg text-slate-400">➜</span>
+    </div>
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900 dark:border-emerald-300/60 dark:bg-emerald-400/20 dark:text-emerald-100">
+      <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-200">Step 2</p>
+      <p className="mt-2 font-semibold">ステージ（記録待ちの変更）</p>
+      <p className="mt-2 leading-6">コミット候補として並んだ領域です。ここに入ったファイルだけが次のコミットに含まれます。</p>
+      <p className="mt-3 text-xs font-mono text-emerald-700 dark:text-emerald-200"><Code>git commit -m "docs: add first note"</Code></p>
+    </div>
+    <div className="hidden justify-center md:flex" aria-hidden="true">
+      <span className="text-lg text-slate-400">➜</span>
+    </div>
+    <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-4 text-sm text-indigo-900 dark:border-indigo-300/60 dark:bg-indigo-400/20 dark:text-indigo-100">
+      <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700 dark:text-indigo-200">Step 3</p>
+      <p className="mt-2 font-semibold">リポジトリ履歴（コミットの記録）</p>
+      <p className="mt-2 leading-6">コミットとして保存された状態です。チーム共有ややり直しはこの履歴を基点に行います。</p>
+      <p className="mt-3 text-xs font-mono text-indigo-700 dark:text-indigo-200"><Code>git log --oneline</Code></p>
+    </div>
+  </div>
+  <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">
+    まだコミットしていない変更を取り消したいときは <Code>git restore notes.txt</Code> で作業ツリーを直前の状態に戻せます。どの段階にいるのか分からないときは、必ず <Code>git status</Code> で確認しましょう。
+  </p>
+</div>
+
 
 <Divider soft className="my-10" />
 

@@ -78,10 +78,17 @@ const lessons: Module[] = [
       "AI開発に取り組む前に押さえておきたい基礎概念・設計指針・リスク管理を体系的に整理します。",
     lessons: [
       {
-        id: "git-basics",
-        title: "Git基礎：インストールと記録の基本",
+        id: "git-install",
+        title: "Git基礎：インストールと初期設定",
         description:
-          "インストールから add / commit / restore までを一気に体験する超入門。",
+          "Windows / macOS での導入手順と初期設定をまとめたハンズオン。",
+        video: null,
+      },
+      {
+        id: "git-basics",
+        title: "Git基礎：変更を記録する超基礎サイクル",
+        description:
+          "git status → git add → git commit → git restore の一連の流れを体験。",
         video: null,
       },
       {
