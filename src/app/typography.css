@@ -235,6 +235,10 @@
     }
   }
 
+  .code-copy-wrapper pre {
+    padding-right: 3.5rem;
+  }
+
   img {
     border-radius: var(--radius-lg);
     border: --alpha(var(--color-gray-950) / 10%) solid 1px;

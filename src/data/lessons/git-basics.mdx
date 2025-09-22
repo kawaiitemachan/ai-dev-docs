@@ -57,10 +57,12 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 
 ```bash
 mkdir git-intro && cd git-intro
-# 既存フォルダなら cd のみでOK
-
 git init
 ```
+
+<Text className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+  既存フォルダを使う場合は <Code>cd</Code> で移動するだけで大丈夫です。
+</Text>
 
 <Text className="mt-4">
   実行後に <Code>.git</Code> という隠しフォルダができれば準備完了です。既存プロジェクトの場合は <Code>git status</Code> を実行して、すでに Git 管理下かどうか確かめましょう。
@@ -130,8 +132,15 @@ git commit -m "docs: add first note"
 </div>
 
 ```bash
-# ファイル内容を直前のコミット時点に戻す
 git restore notes.txt
+```
+
+<Text className="mt-4">
+  ステージだけ外して内容はそのまま残したい場合はこちらです。
+</Text>
+
+```bash
+git restore --staged notes.txt
 ```
 
 <Text className="mt-4">

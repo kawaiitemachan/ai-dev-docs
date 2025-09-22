@@ -66,3 +66,4 @@ npm run format
 - 例え話・ストーリーテリングのボックスは `div.mt-3.analogy-card` を使用し、`src/app/typography.css` に定義した共通スタイル（アンバー系配色）に従うこと。個別の `border` や `bg-*` クラスは付けない。
 - 新しい記事やセクションを作成する前に、本ファイルのスタイルガイドと `src/app/typography.css` のテンプレート定義を必ず確認し、既存デザインから逸脱しないようにする。
 - 外部リンクはデフォルトで新規タブを開くよう `Link` コンポーネント（`catalyst-ui-kit/typescript/link.tsx`）で制御しています。生の `<a>` を使う場合も `target="_blank" rel="noopener noreferrer"` を付与してください。
+- コードブロックはコピーしやすい形で記述する（プロンプト記号や不要な出力を含めない）こと。`src/app/(sidebar)/[slug]/page.tsx` の `<CodeCopy />` でコピー機能が有効になるため、ブロック内はそのまま実行できる最小構成を心がける。

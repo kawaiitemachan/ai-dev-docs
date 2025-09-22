@@ -81,15 +81,28 @@ brew install git
   インストールが終わったら、ターミナルを開き直して次のコマンドを順に実行します。
 </Text>
 
-```bash
-# Git がインストールされているか確認
-git --version
+<Text className="mt-6">
+  まずは Git がインストールされているか確認します。
+</Text>
 
-# コミットに表示されるユーザー情報を設定（初回のみ）
+```bash
+git --version
+```
+
+<Text className="mt-4">
+  コミットに表示されるユーザー名とメールアドレスを設定します（初回のみ）。
+</Text>
+
+```bash
 git config --global user.name "あなたの名前"
 git config --global user.email "you@example.com"
+```
 
-# 設定内容を確認
+<Text className="mt-4">
+  設定した内容を一覧で確認します。
+</Text>
+
+```bash
 git config --global --list
 ```
 

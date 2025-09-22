@@ -9,9 +9,26 @@ export function CodeCopy() {
 
     const pres = Array.from(container.querySelectorAll("pre"));
     pres.forEach((pre) => {
-      if ((pre as HTMLElement).dataset.hasCopy === "true") return;
-      (pre as HTMLElement).dataset.hasCopy = "true";
-      (pre as HTMLElement).classList.add("relative");
+      const preEl = pre as HTMLElement;
+      if (preEl.dataset.hasCopy === "true") return;
+      preEl.dataset.hasCopy = "true";
+
+      const styles = window.getComputedStyle(preEl);
+      const wrapper = document.createElement("div");
+      wrapper.className = "code-copy-wrapper";
+      wrapper.style.position = "relative";
+      wrapper.style.display = "block";
+      wrapper.style.marginTop = styles.marginTop;
+      wrapper.style.marginBottom = styles.marginBottom;
+      wrapper.style.marginLeft = styles.marginLeft;
+      wrapper.style.marginRight = styles.marginRight;
+
+      preEl.style.margin = "0";
+      
+      const parent = preEl.parentElement;
+      if (!parent) return;
+      parent.insertBefore(wrapper, preEl);
+      wrapper.appendChild(preEl);
 
       const btn = document.createElement("button");
       btn.textContent = "コピー";
@@ -31,10 +48,9 @@ export function CodeCopy() {
         } catch {}
       });
 
-      pre.appendChild(btn);
+      wrapper.appendChild(btn);
     });
   }, []);
 
   return null;
 }
-
