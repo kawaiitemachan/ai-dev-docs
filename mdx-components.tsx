@@ -71,8 +71,6 @@ async function CodeBlock({ code, lang }: { code: string; lang: string }) {
       }),
     ],
   });
-
-  });
 }
 
 const IMAGE_DIMENSION_REGEX = /^[^|]+\|\d+x\d+$/;
