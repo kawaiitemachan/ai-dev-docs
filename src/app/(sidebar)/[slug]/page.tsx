@@ -8,7 +8,6 @@ import { NextPageLink } from "@/components/next-page-link";
 import { SidebarLayoutContent } from "@/components/sidebar-layout";
 import TableOfContents from "@/components/table-of-contents";
 import { Video } from "@/components/video-player";
-import { CodeCopy } from "@/components/code-copy";
 import { getLesson, getLessonContent, getModules } from "@/data/lessons";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -78,8 +77,6 @@ export default async function Page({
             <div id="content" className="prose">
               <Content />
             </div>
-            {/* enable copy buttons on code blocks */}
-            <CodeCopy />
             <div className="mt-16 border-t border-gray-200 pt-8 dark:border-white/10">
               {lesson.next ? (
                 <NextPageLink

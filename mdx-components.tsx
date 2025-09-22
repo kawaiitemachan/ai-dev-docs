@@ -53,7 +53,7 @@ async function getHighlighter() {
 }
 
 async function CodeBlock({ code, lang }: { code: string; lang: string }) {
-  let out = (await getHighlighter()).codeToHtml(code, {
+  return (await getHighlighter()).codeToHtml(code, {
     lang,
     theme: theme.name,
     transformers: [
@@ -72,7 +72,7 @@ async function CodeBlock({ code, lang }: { code: string; lang: string }) {
     ],
   });
 
-  return <div dangerouslySetInnerHTML={{ __html: out }} />;
+  });
 }
 
 const IMAGE_DIMENSION_REGEX = /^[^|]+\|\d+x\d+$/;
@@ -173,7 +173,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       let { children: code, className } = child.props;
       let lang = className ? className.replace("language-", "") : "";
 
-      return <CodeBlock code={code} lang={lang} />;
+      const html = await CodeBlock({ code, lang });
+      return <div dangerouslySetInnerHTML={{ __html: html }} />;
     },
     ...components,
   };

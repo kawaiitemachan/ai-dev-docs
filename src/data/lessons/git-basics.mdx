@@ -29,7 +29,7 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 </ul>
 
 <div className="mt-4 rounded-md border border-sky-200/80 bg-sky-50 px-3 py-2 text-sm text-sky-900 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100" role="note">
-  事前準備: Git の考え方から触れたい場合は <TextLink href="/git-overview">Git基礎1：なぜ必要なのか？</TextLink> を、環境構築がまだの場合は <TextLink href="/git-install">Git基礎2：インストールと初期設定</TextLink> を先に完了してから読み進めるとスムーズです。
+  事前準備: Git の考え方から触れたい場合は <TextLink href="/git-overview">Git基礎1：なぜ必要なのか？</TextLink> を、環境構築がまだの場合は <TextLink href="/git-install">Git基礎2：インストールと初期設定</TextLink> を先に完了してから読み進めるとスムーズです。</p>
 </div>
 
 <Divider soft className="my-10" />
@@ -44,7 +44,7 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   このサイクルでは <Strong>作業ツリー</Strong>（今のファイルの中身）と<Strong>ステージ</Strong>（記録待ちの変更）、<Strong>リポジトリ履歴</Strong>（これまでの記録）の 3 つを行き来します。位置関係を意識しながら進めましょう。
 </Text>
 <div className="mt-3 analogy-card" role="note">
-  たとえ: 作業ツリーは机の上のノート、ステージは提出前のフォルダ、リポジトリ履歴は提出ボックスと考えると、変更がどこにあるかイメージしやすくなります。
+  <p className="leading-6">たとえ: 作業ツリーは机の上のノート、ステージは提出前のフォルダ、リポジトリ履歴は提出ボックスと考えると、変更がどこにあるかイメージしやすくなります。</p>
 </div>
 
 <Subheading level={3} className="mt-10">1. Git リポジトリを用意する</Subheading>
@@ -52,7 +52,7 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   作業用フォルダを作成し、その中で Git を初期化します。新しい学習用フォルダを作る想定ですが、既存プロジェクトでも同様です。
 </Text>
 <div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  補足: <Strong>mkdir</Strong> は「make directory」の略で新しいフォルダを作成します。<Strong>cd</Strong> は「change directory」で、操作するフォルダを切り替えるコマンドです。コマンドの間にある <Code>&amp;&amp;</Code> は、前の処理が成功したときだけ次を実行するシェルの連結記号です。
+  <p className="leading-6">補足: <Strong>mkdir</Strong> は「make directory」の略で新しいフォルダを作成します。<Strong>cd</Strong> は「change directory」で、操作するフォルダを切り替えるコマンドです。コマンドの間にある <Code>&amp;&amp;</Code> は、前の処理が成功したときだけ次を実行するシェルの連結記号です。</p>
 </div>
 
 ```bash
@@ -74,7 +74,7 @@ git init
 </Text>
 
 <div className="mt-3 analogy-card" role="note">
-  たとえ: <Code>git status</Code> は作業ノートに付箋を貼って「今はここを編集中」と確認するイメージです。頻繁に見返すほど迷子になりにくくなります。
+  <p className="leading-6">たとえ: <Code>git status</Code> は作業ノートに付箋を貼って「今はここを編集中」と確認するイメージです。頻繁に見返すほど迷子になりにくくなります。</p>
 </div>
 
 ```bash
@@ -85,7 +85,7 @@ git status
   新規ファイルを作成すると「Untracked files」と表示されます。例として <Code>notes.txt</Code> を作り、1 行テキストを書き込んでみてください。エディター（メモ帳、TextEdit、VS Code など）で保存するだけで十分です。
 </Text>
 <div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  補足: GUI やエディターでファイルを追加した直後でも <Code>git status</Code> は変化を検知します。ターミナル派であれば <Code>touch</Code>（空ファイルを作るコマンド）などを使って準備しても OK です。
+  <p className="leading-6">補足: GUI やエディターでファイルを追加した直後でも <Code>git status</Code> は変化を検知します。ターミナル派であれば <Code>touch</Code>（空ファイルを作るコマンド）などを使って準備しても OK です。</p>
 </div>
 
 <Subheading level={3} className="mt-10">3. ステージング：<Code>git add</Code></Subheading>
@@ -94,7 +94,7 @@ git status
 </Text>
 
 <div className="mt-3 analogy-card" role="note">
-  たとえ: <Code>git add</Code> はレジ前のカゴに商品を集めるような感覚です。カゴに入れたものだけが次の会計（コミット）に含まれます。
+  <p className="leading-6">たとえ: <Code>git add</Code> はレジ前のカゴに商品を集めるような感覚です。カゴに入れたものだけが次の会計（コミット）に含まれます。</p>
 </div>
 
 ```bash
@@ -111,7 +111,7 @@ git add notes.txt
 </Text>
 
 <div className="mt-3 analogy-card" role="note">
-  たとえ: <Code>git commit</Code> はレジで会計してレシートを受け取る瞬間です。レシート（コミットメッセージ）があると後から「何を買ったか」がすぐ分かります。
+  <p className="leading-6">たとえ: <Code>git commit</Code> はレジで会計してレシートを受け取る瞬間です。レシート（コミットメッセージ）があると後から「何を買ったか」がすぐ分かります。</p>
 </div>
 
 ```bash
@@ -128,7 +128,7 @@ git commit -m "docs: add first note"
 </Text>
 
 <div className="mt-3 analogy-card" role="note">
-  たとえ: <Code>git restore</Code> は鉛筆の書き間違いを消しゴムで消すイメージです。コミットという「清書」をする前なら、跡を残さず戻せます。
+  <p className="leading-6">たとえ: <Code>git restore</Code> は鉛筆の書き間違いを消しゴムで消すイメージです。コミットという「清書」をする前なら、跡を残さず戻せます。</p>
 </div>
 
 ```bash
