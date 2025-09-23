@@ -22,6 +22,9 @@ npm run lint
 
 # コードフォーマット（Prettier使用 - Tailwind CSS、import整理プラグイン含む）
 npm run format
+
+# 依存関係のインストール
+npm install
 ```
 
 ## アーキテクチャ構造
@@ -30,8 +33,12 @@ npm run format
 - **Next.js 15** - App Router、ページは静的生成
 - **Tailwind CSS v4** - `@tailwindcss/postcss`使用、設定ファイル不要
 - **MDX** - `/src/data/lessons/`および`/src/data/interviews/`でコンテンツ管理
-- **TypeScript** - 厳格モード（`strict: true`）、パスエイリアス`@/*`を`./src/*`にマップ
+- **TypeScript** - 厳格モード（`strict: true`）、パスエイリアス：
+  - `@/*` → `./src/*`
+  - `@catalyst-ui-kit/*` → `./catalyst-ui-kit/*`
 - **Shiki** - シンタックスハイライト（`mdx-components.tsx`で設定）
+- **Headless UI** - React用UIコンポーネント
+- **Geist** - フォントライブラリ
 
 ### ルーティング構造
 - `(sidebar)` グループ - サイドバー付きレイアウト（ホーム、レッスン詳細）
@@ -52,10 +59,17 @@ npm run format
 新しいレッスン:
 1. `/src/data/lessons.ts`にメタデータ追加
 2. `/src/data/lessons/[slug].mdx`ファイル作成
+3. MDXファイル内で`Subheading`コンポーネントを使用（見出しスタイル自動適用）
 
 新しいインタビュー:
 1. `/src/data/interviews.ts`にメタデータ追加
 2. `/src/data/interviews/[slug].mdx`ファイル作成
+
+### 重要なコンポーネント
+- **Catalyst UIキット** - `/catalyst-ui-kit/`に配置されたUIコンポーネント群
+- **`CodeBlockPanel`** - `/src/components/code-block.tsx`でコピー機能付きコードブロック提供
+- **`Subheading`** - レベル2/3見出しのデザインを自動適用（`catalyst-ui-kit/typescript/heading.tsx`）
+- **`Link`** - 外部リンクは自動で新規タブを開く（`catalyst-ui-kit/typescript/link.tsx`）
 
 ## ドキュメントスタイルガイド（共通ルール）
 
