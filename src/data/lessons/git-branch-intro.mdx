@@ -10,7 +10,7 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   メインの履歴を壊さずに試行錯誤するには「ブランチ」を使いこなすのが近道です。超初心者でも迷わないように、ブランチを作る→作業する→メインへ戻す→片付ける、の4ステップに分けて解説します。
 </Text>
 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-2.5 py-1 text-xs/5 font-semibold text-indigo-800 ring-1 ring-indigo-200 dark:bg-indigo-400/10 dark:text-indigo-200 dark:ring-indigo-300/30">
-  更新日: 2025/09/21
+  <span className="tracking-wide">更新日: 2025/09/21</span>
 </div>
 
 <Divider soft className="my-10" />
@@ -34,6 +34,12 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Text className="mt-3">
   ブランチは「履歴の分岐ライン」です。<Strong>main</Strong>（または <Strong>master</Strong>）が本番用の軸で、そこから枝分かれしたブランチで変更を試します。うまくいったものだけを main に取り込むことで、失敗を気にせず実験できます。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>ブランチ</Strong> はひとつの作業線（タイムライン）です。<Strong>main</Strong> は完成版を置く線、そこから派生した線で実験し、安全だと判断したら main へ合流させます。</p>
+</div>
+<div className="mt-3 analogy-card" role="note">
+  <p className="leading-6">たとえ: RPG のセーブデータを分けて「本番用」と「試行用」を作るイメージです。試行用で試した内容が良ければ、本番用に反映します。</p>
+</div>
 
 <Divider className="my-12" />
 
@@ -41,6 +47,9 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Text className="mt-3">
   まずは main を最新にしてから、ブランチを作成します。初めてなら命名規則は気にせず「feature/○○」のような分かりやすい名前を付けましょう。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Code>git pull --ff-only</Code> は main を最新化するコマンドです。<Strong>fast-forward（ff）</Strong> できるときだけ取り込むため、余計なマージコミットが増えません。<Code>git switch -c</Code> は「branch を作成（create）し、そのまま切り替える」近年の書きやすい書式です。</p>
+</div>
 
 ```bash
 # main にいることを確認
@@ -63,6 +72,9 @@ git switch -c feature/update-prompt
 <Text className="mt-3">
   やることは Git 基礎編と同じ。「確認 → add → commit」です。作業が終わったらブランチにコミットを残しておきましょう。
 </Text>
+<div className="mt-3 analogy-card" role="note">
+  <p className="leading-6">たとえ: ブランチ作業は「試作品ノート」に書き込む時間です。気兼ねなく書き直しながら、完成したら提出用ノート（main）に書き写します。</p>
+</div>
 
 ```bash
 # 変更を確認
@@ -95,6 +107,9 @@ git merge feature/update-prompt
 <Text className="mt-4">
   競合（Conflict）が発生した場合は、Git が該当ファイルに印を付けます。編集して矛盾を解消し、<Code>git add</Code> → <Code>git commit</Code> で完了です。Visual Studio Code などのエディタは競合解消を手助けしてくれる UI を備えています。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>マージ</Strong> は別々のブランチの履歴を統合する操作です。<Strong>コンフリクト</Strong> は同じ行を別々に編集したときの競合。印を確認しながら、どの内容を採用するか選べば解決できます。</p>
+</div>
 
 <Divider className="my-12" />
 
@@ -114,6 +129,9 @@ git branch -d feature/update-prompt
 <Text className="mt-4">
   未マージのまま削除したい場合は <Code>git branch -D ブランチ名</Code> ですが、履歴が失われるので慎重に。まずは main に取り込む（merge）か、別途バックアップしておきましょう。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Code>git branch -d</Code> は「マージ済みなら削除していい」という安全装置付きのコマンドです。<Code>-D</Code> は強制削除なので、復元できない前提で使います。</p>
+</div>
 
 <Divider className="my-12" />
 

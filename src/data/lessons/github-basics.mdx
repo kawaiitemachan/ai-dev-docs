@@ -10,7 +10,14 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   Git がローカルの履歴管理ツールなのに対し、GitHub はその履歴をインターネット経由で共有するためのサービスです。ここでは GitHub のアカウント作成からリモートリポジトリとの接続、最低限使う push / pull / clone を段階的に体験します。
 </Text>
 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-2.5 py-1 text-xs/5 font-semibold text-sky-800 ring-1 ring-sky-200 dark:bg-sky-400/10 dark:text-sky-200 dark:ring-sky-300/30">
-  更新日: 2025/09/21
+  <span className="tracking-wide">更新日: 2025/09/21</span>
+</div>
+
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>リモートリポジトリ</Strong> はインターネット上に置いた Git の金庫です。ローカル（自分の PC）の履歴を同期することで、他のメンバーや別の端末と同じ状態を共有できます。</p>
+</div>
+<div className="mt-3 analogy-card" role="note">
+  <p className="leading-6">たとえ: ローカルのリポジトリが自宅の作業ノートなら、GitHub はチーム全員が出入りできるロッカーです。必要なときにノートを出し入れできるよう、鍵（認証）と使い方を覚えます。</p>
 </div>
 
 <Divider soft className="my-10" />
@@ -34,6 +41,9 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Text className="mt-3">
   初めての場合は <TextLink href="https://github.com/">GitHub</TextLink> にアクセスし、無料アカウントを作成します。メールアドレスの確認が完了したら、プロフィール設定と 2 段階認証の有効化を済ませると安全です。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>2 段階認証</Strong> はパスワードに加えてワンタイムコードを入力する仕組みです。万が一パスワードが漏れても、アカウントが守られます。</p>
+</div>
 
 <Text className="mt-4">
   GUI ツールを使う場合は <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> をインストールし、同じアカウントでサインインしておくと、リモート操作をボタン一つで確認できます。
@@ -55,13 +65,19 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Text className="mt-4">
   作成すると、リポジトリのトップページに「Quick setup」ガイドが表示されます。ここにローカルと接続するためのコマンドが載っているので、次の章で使用します。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">補足: <Strong>Quick setup</Strong> のコードブロックは HTTPS と SSH の 2 種類が表示されます。最初は HTTPS の URL をコピーすれば OK です。SSH は後で鍵を登録してから使用します。</p>
+</div>
 
 <Divider className="my-12" />
 
 <Subheading level={2}>3. 既存のローカルリポジトリを接続する</Subheading>
 <Text className="mt-3">
-  すでにローカルで Git 管理しているフォルダがある場合は、乾燥（クリーン）な状態を確認してからリモートを登録します。
+  すでにローカルで Git 管理しているフォルダがある場合は、クリーン（未コミットの変更がない）状態を確認してからリモートを登録します。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>リモート</Strong> は Git が覚えておく接続先のニックネームです。初期設定でよく使う <Strong>origin</Strong> は「メインの同期先」という意味合いの慣例名です。</p>
+</div>
 
 ```bash
 # 現在の状態を確認
@@ -77,6 +93,9 @@ git push -u origin main
 <Text className="mt-4">
   <Code>-u</Code> オプションを付けると、次回以降は <Code>git push</Code> だけで OK になります。ブランチ名が <Code>master</Code> の場合はそのまま読み替えてください。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">補足: <Code>git remote -v</Code> を実行すると、登録済みのリモート一覧と URL が確認できます。push 前に先ほどの URL が設定されているかチェックしましょう。</p>
+</div>
 
 <Divider className="my-12" />
 
@@ -105,6 +124,9 @@ git push -u origin main
     </Text>
   </li>
 </ul>
+<div className="mt-3 analogy-card" role="note">
+  <p className="leading-6">たとえ: <Code>git pull</Code> はロッカーから最新の資料を持ち帰る動き、<Code>git push</Code> は自分の更新版をロッカーに戻す動き、<Code>git clone</Code> はロッカー全体を丸ごと複製して別の机に置く動きです。</p>
+</div>
 
 <Divider className="my-12" />
 
@@ -120,6 +142,9 @@ git push -u origin main
     機密情報を誤って push したら <TextLink href="https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository">公式手順</TextLink> を参考に早急に履歴を書き換える
   </li>
 </ul>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>.gitignore</Strong> は「Git で無視するファイル一覧」です。ここに追加しておくと、うっかりコミットに含めるミスを減らせます。</p>
+</div>
 
 <Divider className="my-12" />
 

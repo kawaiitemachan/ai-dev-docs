@@ -67,3 +67,4 @@ npm run format
 - 新しい記事やセクションを作成する前に、本ファイルのスタイルガイドと `src/app/typography.css` のテンプレート定義を必ず確認し、既存デザインから逸脱しないようにする。
 - 外部リンクはデフォルトで新規タブを開くよう `Link` コンポーネント（`catalyst-ui-kit/typescript/link.tsx`）で制御しています。生の `<a>` を使う場合も `target="_blank" rel="noopener noreferrer"` を付与してください。
 - コードブロックはコピーしやすい形で記述する（プロンプト記号や不要な出力を含めない）こと。`CodeBlockPanel`（`src/components/code-block.tsx`）でコピー機能が提供されるため、ブロック内はそのまま実行できる最小構成を心がける。
+- 当サイトのドキュメントは「開発の基礎知識がない超初心者」を主対象とする。エンジニアが日常的に使う専門用語・コマンドが登場する場合は、<Strong>用語メモ</Strong>や<Strong>補足カード</Strong>、<Strong>たとえ</Strong>を積極的に挿入し、抽象的な概念もイメージできるように説明を補うこと。

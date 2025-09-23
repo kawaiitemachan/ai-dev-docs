@@ -43,6 +43,9 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <Text className="mt-4">
   このサイクルでは <Strong>作業ツリー</Strong>（今のファイルの中身）と<Strong>ステージ</Strong>（記録待ちの変更）、<Strong>リポジトリ履歴</Strong>（これまでの記録）の 3 つを行き来します。位置関係を意識しながら進めましょう。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>リポジトリ</Strong> は Git が履歴を保管するための金庫付きフォルダです。中にある <Code>.git</Code> が、過去の記録や設定をまとめて管理しています。</p>
+</div>
 <div className="mt-3 analogy-card" role="note">
   <p className="leading-6">たとえ: 作業ツリーは机の上のノート、ステージは提出前のフォルダ、リポジトリ履歴は提出ボックスと考えると、変更がどこにあるかイメージしやすくなります。</p>
 </div>
@@ -85,6 +88,9 @@ git status
   新規ファイルを作成すると「Untracked files」と表示されます。例として <Code>notes.txt</Code> を作り、1 行テキストを書き込んでみてください。エディター（メモ帳、TextEdit、VS Code など）で保存するだけで十分です。
 </Text>
 <div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>Untracked</Strong> は「まだ見張っていない」という意味です。<Code>git add</Code> でステージに入れると、Git がそのファイルを監視し始めます。</p>
+</div>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
   <p className="leading-6">補足: GUI やエディターでファイルを追加した直後でも <Code>git status</Code> は変化を検知します。ターミナル派であれば <Code>touch</Code>（空ファイルを作るコマンド）などを使って準備しても OK です。</p>
 </div>
 
@@ -121,6 +127,9 @@ git commit -m "docs: add first note"
 <Text className="mt-4">
   成功すると「[main (root-commit) ...] docs: add first note」といったメッセージが表示されます。履歴は <Code>git log --oneline</Code> で一覧でき、作業の節目を振り返るときに役立ちます。
 </Text>
+<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
+  <p className="leading-6">用語メモ: <Strong>コミット</Strong> はその瞬間のスナップショットを保存する操作です。オプションの <Code>--oneline</Code> はログを 1 行表示にまとめ、進捗をざっと確認したいときに便利です。</p>
+</div>
 
 <Subheading level={3} className="mt-10">5. やり直し：<Code>git restore</Code></Subheading>
 <Text>
@@ -133,14 +142,6 @@ git commit -m "docs: add first note"
 
 ```bash
 git restore notes.txt
-```
-
-<Text className="mt-4">
-  ステージだけ外して内容はそのまま残したい場合はこちらです。
-</Text>
-
-```bash
-git restore --staged notes.txt
 ```
 
 <Text className="mt-4">
