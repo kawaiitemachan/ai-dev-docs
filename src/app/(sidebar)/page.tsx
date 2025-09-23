@@ -112,7 +112,35 @@ export default async function Page() {
                     <p className="mt-4 text-base/7 text-gray-700 sm:text-sm/7 dark:text-gray-400">
                       {module.description}
                     </p>
-                    {module.lessons.length > 0 ? (
+                    {module.groups && module.groups.length > 0 ? (
+                      <div className="mt-6 space-y-10">
+                        {module.groups.map((group) => (
+                          <section key={group.id}>
+                            <h3 className="text-lg/7 font-semibold text-gray-900 dark:text-white">
+                              {group.title}
+                            </h3>
+                            {group.description && (
+                              <p className="mt-2 text-sm/7 text-gray-600 dark:text-gray-400">
+                                {group.description}
+                              </p>
+                            )}
+                            <ol className="mt-4 space-y-4">
+                              {group.lessons.map((lesson) => (
+                                <li key={lesson.id}>
+                                  <ContentLink
+                                    title={lesson.title}
+                                    description={lesson.description}
+                                    href={`/${lesson.id}`}
+                                    type="video"
+                                    duration={lesson.video?.duration}
+                                  />
+                                </li>
+                              ))}
+                            </ol>
+                          </section>
+                        ))}
+                      </div>
+                    ) : module.lessons.length > 0 ? (
                       <ol className="mt-6 space-y-4">
                         {module.lessons.map((lesson) => (
                           <li key={lesson.id}>

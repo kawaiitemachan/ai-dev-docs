@@ -97,36 +97,92 @@ function CourseNavigation({
               {(openSections[module.id] ?? true) ? "-" : "+"}
             </span>
           </button>
-          <ul
+          <div
             id={`module-${module.id}`}
             data-open={openSections[module.id] ?? true ? "" : undefined}
             className={clsx(
-              "mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400",
+              "mt-4 space-y-5 border-l border-gray-950/10 sm:mt-3 dark:border-white/10",
               !(openSections[module.id] ?? true) && "hidden",
             )}
           >
-            {module.lessons.map((lesson) => (
-              <li
-                key={lesson.id}
-                className={clsx(
-                  "-ml-px flex border-l border-transparent pl-4",
-                  "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
-                  "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
-                )}
-              >
-                <Link
-                  href={`/${lesson.id}`}
-                  aria-current={
-                    `/${lesson.id}` === pathname ? "page" : undefined
-                  }
-                  onNavigate={onNavigate}
-                  className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
-                >
-                  {lesson.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+            {module.groups && module.groups.length > 0 ? (
+              module.groups.map((group) => (
+                <div key={group.id} className="pl-4">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between gap-2 text-left text-sm/6 font-medium text-gray-900 sm:text-xs/6 dark:text-white"
+                    aria-expanded={openSections[group.id] ?? true}
+                    aria-controls={`group-${group.id}`}
+                    onClick={() =>
+                      setOpenSections((prev) => ({
+                        ...prev,
+                        [group.id]: !(prev[group.id] ?? true),
+                      }))
+                    }
+                  >
+                    <span>{group.title}</span>
+                    <span className="text-base leading-none text-gray-600 transition-transform dark:text-gray-300">
+                      {(openSections[group.id] ?? true) ? "-" : "+"}
+                    </span>
+                  </button>
+                  <ul
+                    id={`group-${group.id}`}
+                    data-open={openSections[group.id] ?? true ? "" : undefined}
+                    className={clsx(
+                      "mt-3 flex flex-col gap-3 text-sm/6 text-gray-700 dark:text-gray-400",
+                      !(openSections[group.id] ?? true) && "hidden",
+                    )}
+                  >
+                    {group.lessons.map((lesson) => (
+                      <li
+                        key={lesson.id}
+                        className={clsx(
+                          "-ml-px flex border-l border-transparent pl-3",
+                          "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
+                          "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
+                        )}
+                      >
+                        <Link
+                          href={`/${lesson.id}`}
+                          aria-current={
+                            `/${lesson.id}` === pathname ? "page" : undefined
+                          }
+                          onNavigate={onNavigate}
+                          className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
+                        >
+                          {lesson.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            ) : (
+              <ul className="flex flex-col gap-4 text-base/7 text-gray-700 sm:gap-3 sm:text-sm/6 dark:text-gray-400">
+                {module.lessons.map((lesson) => (
+                  <li
+                    key={lesson.id}
+                    className={clsx(
+                      "-ml-px flex border-l border-transparent pl-4",
+                      "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
+                      "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
+                    )}
+                  >
+                    <Link
+                      href={`/${lesson.id}`}
+                      aria-current={
+                        `/${lesson.id}` === pathname ? "page" : undefined
+                      }
+                      onNavigate={onNavigate}
+                      className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
+                    >
+                      {lesson.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       ))}
       {EXTRA_NAVIGATION.map((section) => {

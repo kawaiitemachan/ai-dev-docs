@@ -1,3 +1,10 @@
+export type LessonGroup = {
+  id: string;
+  title: string;
+  description?: string;
+  lessons: Lesson[];
+};
+
 export type Module = {
   id: string;
   /** カテゴリ名（左カラムのラベルに使用） */
@@ -5,6 +12,7 @@ export type Module = {
   title: string;
   description: string;
   lessons: Lesson[];
+  groups?: LessonGroup[];
 };
 
 export type Lesson = {
@@ -46,6 +54,44 @@ export async function getLessonContent(slug: string) {
   return (await import(`@/data/lessons/${slug}.mdx`)).default;
 }
 
+const gitFundamentalsLessons: Lesson[] = [
+  {
+    id: "git-overview",
+    title: "Git基礎1：なぜ必要なのか？",
+    description:
+      "コマンドなしで Git の価値と AI 開発での使いどころを理解する超入門。",
+    video: null,
+  },
+  {
+    id: "git-install",
+    title: "Git基礎2：インストールと初期設定",
+    description:
+      "Windows / macOS での導入手順と初期設定をまとめたハンズオン。",
+    video: null,
+  },
+  {
+    id: "git-basics",
+    title: "Git基礎3：変更を記録する超基礎サイクル",
+    description:
+      "git status → git add → git commit → git restore の一連の流れを体験。",
+    video: null,
+  },
+  {
+    id: "git-branch-intro",
+    title: "Gitブランチ編：安全に試すための分岐運用",
+    description:
+      "ブランチの考え方と switch / merge / cleanup の基本操作を学ぶ。",
+    video: null,
+  },
+  {
+    id: "github-basics",
+    title: "GitHub編：リモート連携と共同作業の第一歩",
+    description:
+      "リモートリポジトリの作成・push/pull・Cloneまでを超初心者向けに整理。",
+    video: null,
+  },
+];
+
 const lessons: Module[] = [
   {
     id: "coding-agents-ide",
@@ -76,41 +122,12 @@ const lessons: Module[] = [
     title: "AI開発必須知識",
     description:
       "AI開発に取り組む前に押さえておきたい基礎概念・設計指針・リスク管理を体系的に整理します。",
-    lessons: [
+    lessons: gitFundamentalsLessons,
+    groups: [
       {
-        id: "git-overview",
-        title: "Git基礎1：なぜ必要なのか？",
-        description:
-          "コマンドなしで Git の価値と AI 開発での使いどころを理解する超入門。",
-        video: null,
-      },
-      {
-        id: "git-install",
-        title: "Git基礎2：インストールと初期設定",
-        description:
-          "Windows / macOS での導入手順と初期設定をまとめたハンズオン。",
-        video: null,
-      },
-      {
-        id: "git-basics",
-        title: "Git基礎3：変更を記録する超基礎サイクル",
-        description:
-          "git status → git add → git commit → git restore の一連の流れを体験。",
-        video: null,
-      },
-      {
-        id: "git-branch-intro",
-        title: "Gitブランチ編：安全に試すための分岐運用",
-        description:
-          "ブランチの考え方と switch / merge / cleanup の基本操作を学ぶ。",
-        video: null,
-      },
-      {
-        id: "github-basics",
-        title: "GitHub編：リモート連携と共同作業の第一歩",
-        description:
-          "リモートリポジトリの作成・push/pull・Cloneまでを超初心者向けに整理。",
-        video: null,
+        id: "ai-fundamentals-git",
+        title: "Git / GitHub 基礎パック",
+        lessons: gitFundamentalsLessons,
       },
     ],
   },
