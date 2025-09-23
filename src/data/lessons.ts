@@ -50,8 +50,53 @@ export async function getLesson(
   };
 }
 
+const lessonImports = {
+  "git-overview": () => import("@/data/lessons/git/git-overview.mdx"),
+  "git-install": () => import("@/data/lessons/git/git-install.mdx"),
+  "git-basics": () => import("@/data/lessons/git/git-basics.mdx"),
+  "git-branch-intro": () => import("@/data/lessons/git/git-branch-intro.mdx"),
+  "github-basics": () => import("@/data/lessons/git/github-basics.mdx"),
+  "git-ai-automation": () => import("@/data/lessons/git/git-ai-automation.mdx"),
+  "claude-code-setup": () => import("@/data/lessons/coding-agents/claude-code-setup.mdx"),
+  "codex-cli-getting-started": () =>
+    import("@/data/lessons/coding-agents/codex-cli-getting-started.mdx"),
+  "anxiety-messages": () => import("@/data/lessons/mindset/anxiety-messages.mdx"),
+  "decision-paralysis": () => import("@/data/lessons/mindset/decision-paralysis.mdx"),
+  "dealing-with-coincidence": () =>
+    import("@/data/lessons/mindset/dealing-with-coincidence.mdx"),
+  "forgiving-others": () => import("@/data/lessons/mindset/forgiving-others.mdx"),
+  "giving-credit": () => import("@/data/lessons/mindset/giving-credit.mdx"),
+  "landscape-of-choice": () => import("@/data/lessons/mindset/landscape-of-choice.mdx"),
+  "liberation-from-regret": () => import("@/data/lessons/mindset/liberation-from-regret.mdx"),
+  "maintaining-self": () => import("@/data/lessons/mindset/maintaining-self.mdx"),
+  "mapping-causal-factors": () => import("@/data/lessons/mindset/mapping-causal-factors.mdx"),
+  "paradox-of-agency": () => import("@/data/lessons/mindset/paradox-of-agency.mdx"),
+  "path-of-least-resistance": () =>
+    import("@/data/lessons/mindset/path-of-least-resistance.mdx"),
+  "recognizing-patterns": () => import("@/data/lessons/mindset/recognizing-patterns.mdx"),
+  "reframing-achievement": () => import("@/data/lessons/mindset/reframing-achievement.mdx"),
+  "reframing-uncertainty": () => import("@/data/lessons/mindset/reframing-uncertainty.mdx"),
+  "surrendering-outcome": () => import("@/data/lessons/mindset/surrendering-outcome.mdx"),
+  "surrendering-to-success": () => import("@/data/lessons/mindset/surrendering-to-success.mdx"),
+  "unburden-accountability": () =>
+    import("@/data/lessons/mindset/unburden-accountability.mdx"),
+  "values-and-goals": () => import("@/data/lessons/mindset/values-and-goals.mdx"),
+  "widening-field-of-view": () => import("@/data/lessons/mindset/widening-field-of-view.mdx"),
+  "writing-autobiography": () => import("@/data/lessons/mindset/writing-autobiography.mdx"),
+} as const satisfies Record<string, () => Promise<any>>;
+
+type LessonSlug = keyof typeof lessonImports;
+
+function isLessonSlug(slug: string): slug is LessonSlug {
+  return slug in lessonImports;
+}
+
 export async function getLessonContent(slug: string) {
-  return (await import(`@/data/lessons/${slug}.mdx`)).default;
+  if (!isLessonSlug(slug)) {
+    throw new Error(`Unknown lesson slug: ${slug}`);
+  }
+
+  return (await lessonImports[slug]()).default;
 }
 
 const gitFundamentalsLessons: Lesson[] = [
