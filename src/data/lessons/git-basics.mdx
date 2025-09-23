@@ -41,11 +41,8 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   ここからは実際にファイルを触りながら「現在の状態を確認 → 変更を並べる → 履歴に残す → やり直す」の 1 周を体験します。各ステップで何をしているかが分かれば、最小構成のチーム開発や個人プロジェクトでも迷いにくくなります。
 </Text>
 <Text className="mt-4">
-  このサイクルでは <Strong>作業ツリー</Strong>（今のファイルの中身）と<Strong>ステージ</Strong>（記録待ちの変更）、<Strong>リポジトリ履歴</Strong>（これまでの記録）の 3 つを行き来します。位置関係を意識しながら進めましょう。
+  このサイクルでは <Strong>作業ツリー</Strong>（今のファイルの中身）と<Term definition="変更予定のファイルを一時的に並べておく待機場所。">ステージ</Term>（記録待ちの変更）、<Term definition="Git が履歴を保存する金庫付きフォルダ。フォルダ直下の .git にすべての記録が入っています。">リポジトリ履歴</Term>（これまでの記録）の 3 つを行き来します。位置関係を意識しながら進めましょう。
 </Text>
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">用語メモ: <Strong>リポジトリ</Strong> は Git が履歴を保管するための金庫付きフォルダです。中にある <Code>.git</Code> が、過去の記録や設定をまとめて管理しています。</p>
-</div>
 <div className="mt-3 analogy-card" role="note">
   <p className="leading-6">たとえ: 作業ツリーは机の上のノート、ステージは提出前のフォルダ、リポジトリ履歴は提出ボックスと考えると、変更がどこにあるかイメージしやすくなります。</p>
 </div>
@@ -87,9 +84,9 @@ git status
 <Text className="mt-4">
   新規ファイルを作成すると「Untracked files」と表示されます。例として <Code>notes.txt</Code> を作り、1 行テキストを書き込んでみてください。エディター（メモ帳、TextEdit、VS Code など）で保存するだけで十分です。
 </Text>
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">用語メモ: <Strong>Untracked</Strong> は「まだ見張っていない」という意味です。<Code>git add</Code> でステージに入れると、Git がそのファイルを監視し始めます。</p>
-</div>
+<Text className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+  <Term definition="Git がまだ追跡していない状態のファイル。ステージに入れると監視が始まります。">Untracked</Term> と表示されたら、<Code>git add</Code> でステージへ並べて監視を開始しましょう。
+</Text>
 <div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
   <p className="leading-6">補足: GUI やエディターでファイルを追加した直後でも <Code>git status</Code> は変化を検知します。ターミナル派であれば <Code>touch</Code>（空ファイルを作るコマンド）などを使って準備しても OK です。</p>
 </div>
@@ -127,9 +124,9 @@ git commit -m "docs: add first note"
 <Text className="mt-4">
   成功すると「[main (root-commit) ...] docs: add first note」といったメッセージが表示されます。履歴は <Code>git log --oneline</Code> で一覧でき、作業の節目を振り返るときに役立ちます。
 </Text>
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">用語メモ: <Strong>コミット</Strong> はその瞬間のスナップショットを保存する操作です。オプションの <Code>--oneline</Code> はログを 1 行表示にまとめ、進捗をざっと確認したいときに便利です。</p>
-</div>
+<Text className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+  <Term definition="その瞬間の変更をスナップショットとして記録する操作。">コミット</Term>メッセージは短くても意味が通れば十分です。<Code>--oneline</Code> オプションはログを 1 行表示にまとめるショートビューです。
+</Text>
 
 <Subheading level={3} className="mt-10">5. やり直し：<Code>git restore</Code></Subheading>
 <Text>
@@ -161,18 +158,19 @@ git restore notes.txt
   ここまでできれば、AI プロジェクトでも安心してファイルを編集・保存できる土台が整いました。次はブランチを使って安全に試せる環境を作りましょう。
 </Text>
 
-#### 図解で確認：作業ツリー → ステージ → 履歴
-<Text className="mt-3">
-  一連の流れを視覚で押さえておくと、迷ったときに「今どこにいるのか」がすぐ分かります。作業ツリー（ワーキングツリー）からステージ、そしてリポジトリ履歴へと変更が移動する様子を下図で押さえましょう。
-</Text>
-<div className="mt-4 rounded-xl border border-slate-200/80 bg-white/70 p-4 shadow-sm ring-1 ring-white/40 backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/50 dark:ring-white/10">
-  <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center">
-    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Step 1</p>
-      <p className="mt-2 font-semibold text-slate-800 dark:text-slate-100">作業ツリー（作業中のファイル）</p>
-      <p className="mt-2 leading-6">テキストエディターで書き換えた直後の状態です。まだ履歴には入っておらず、いつでも編集し直せます。</p>
-      <p className="mt-3 text-xs font-mono text-emerald-600 dark:text-emerald-300"><Code>git add notes.txt</Code></p>
-    </div>
+<div className="mt-12 rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm ring-1 ring-white/40 backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/40 dark:ring-white/10">
+  <Subheading level={3}>図解で確認：作業ツリー → ステージ → 履歴</Subheading>
+  <Text className="mt-3">
+    一連の流れを視覚で押さえておくと、迷ったときに「今どこにいるのか」がすぐ分かります。作業ツリー（ワーキングツリー）からステージ、そしてリポジトリ履歴へと変更が移動する様子を下図で押さえましょう。
+  </Text>
+  <div className="mt-4 rounded-xl border border-slate-200/80 bg-white/70 p-4 shadow-sm ring-1 ring-white/30 backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/55 dark:ring-white/10">
+    <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center">
+      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200">
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Step 1</p>
+        <p className="mt-2 font-semibold text-slate-800 dark:text-slate-100">作業ツリー（作業中のファイル）</p>
+        <p className="mt-2 leading-6">テキストエディターで書き換えた直後の状態です。まだ履歴には入っておらず、いつでも編集し直せます。</p>
+        <p className="mt-3 text-xs font-mono text-emerald-600 dark:text-emerald-300"><Code>git add notes.txt</Code></p>
+      </div>
     <div className="hidden justify-center md:flex" aria-hidden="true">
       <span className="text-lg text-slate-400">➜</span>
     </div>
@@ -192,10 +190,12 @@ git restore notes.txt
       <p className="mt-3 text-xs font-mono text-indigo-700 dark:text-indigo-200"><Code>git log --oneline</Code></p>
     </div>
   </div>
-  <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">
-    まだコミットしていない変更を取り消したいときは <Code>git restore notes.txt</Code> で作業ツリーを直前の状態に戻せます。どの段階にいるのか分からないときは、必ず <Code>git status</Code> で確認しましょう。
-  </p>
-</div>
+      <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">
+        まだコミットしていない変更を取り消したいときは <Code>git restore notes.txt</Code> で作業ツリーを直前の状態に戻せます。どの段階にいるのか分からないときは、必ず <Code>git status</Code> で確認しましょう。
+      </p>
+    </div>
+  </div>
+
 
 
 <Divider soft className="my-10" />

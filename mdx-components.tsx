@@ -3,6 +3,7 @@ import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import React, { ReactNode } from "react";
 import { createHighlighter, Highlighter } from "shiki";
+import { Term } from "@/components/term-tooltip";
 import theme from "./src/app/syntax-theme.json";
 
 function getTextContent(node: ReactNode): string {
@@ -174,6 +175,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       const html = await CodeBlock({ code, lang });
       return <div dangerouslySetInnerHTML={{ __html: html }} />;
     },
+    Term,
     ...components,
   };
 }

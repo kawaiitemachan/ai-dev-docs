@@ -1,0 +1,128 @@
+---
+---
+
+import { Heading, Subheading } from "@catalyst-ui-kit/typescript/heading";
+import { Text, Strong, TextLink, Code } from "@catalyst-ui-kit/typescript/text";
+import { Divider } from "@catalyst-ui-kit/typescript/divider";
+
+<Heading level={1}>Git AIアシスト編：AIにGitコマンドを任せるプロンプト術</Heading>
+<Text>
+  ここでは、Git の基礎操作やブランチ運用、GitHub 連携を AI エージェントに任せるための考え方とプロンプト設計をまとめます。人がコマンドを直接入力しなくても、AI が文脈を理解して安全に作業できるようにするのが目的です。
+</Text>
+<div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs/5 font-semibold text-emerald-800 ring-1 ring-emerald-200 dark:bg-emerald-400/10 dark:text-emerald-200 dark:ring-emerald-300/30">
+  <span className="tracking-wide">更新日: 2025/09/23</span>
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>この記事でわかること</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>AI に Git 操作を依頼するときの前提共有と安全確認のポイント</li>
+  <li><Term definition="AI に伝える指示文。目的・条件・出力形式などをまとめる。">プロンプト</Term>で「add → commit」を任せる具体的な書き方</li>
+  <li>コミットメッセージ生成と push 指示を組み込む際の注意点</li>
+  <li>想定外の挙動が起きたときに人間が確認・介入するためのヒント</li>
+</ul>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>AI に任せる前のおさらい</Subheading>
+<Text className="mt-3">
+  AI は指示された内容を高速に実行できますが、プロジェクトの背景や制約を自然には知りません。<TextLink href="/git-overview">Git基礎1</TextLink>〜<TextLink href="/github-basics">GitHub編</TextLink> の流れで学んだように、<Strong>履歴が壊れるとリカバリーが大変</Strong>です。まずはリポジトリの状態を把握し、どんな成果物を守りたいのかを整理してから AI にバトンを渡しましょう。
+</Text>
+<Text className="mt-3">
+  たとえば「<Code>git add</Code> → <Code>git commit</Code> → <Code>git push</Code>をお願い」と AI に伝えるだけでも処理自体は進みます。しかし、それぞれのコマンドがどんな効果を持ち、どうして今それを実行しているのかを理解していないと、後から発生するエラーや分岐の判断で必ずつまずきます。
+</Text>
+<Text className="mt-3">
+  <Strong>本当に必要なコマンド群を自分の言葉で説明できる状態にしておき、そのうえで AI に任せて手間を省く</Strong>――この順番を守ることが大切です。AI に依頼した操作が見慣れない結果を返したときは、ログを読みながら積極的に質問し、仕組みを理解する姿勢を忘れないでください。
+</Text>
+
+<Subheading level={2} className="mt-12">コミット作業を AI に任せるプロンプト</Subheading>
+<Text className="mt-3">
+  実装が終わって「セーブポイント」として履歴を残したい場面では、以下のように依頼すると <Code>git add</Code> からコミットメッセージの作成まで任せられます。状況と期待するアウトプットを明示し、事前チェックも含めるのがポイントです。ここでいう<Term definition="AI に操作を行う権限を渡す前に確認してほしいポイント。">事前チェック</Term>は、AI が勝手に進めてよい条件と止まるべき条件を共有するための合図です。
+</Text>
+
+```text
+以下の手順でコミットと push まで行ってください。
+1. `git status` と `git diff --stat` を実行し、想定外の差分があればその場で質問してください。最終報告時に要約をまとめてください。
+2. 必要なファイルだけを `git add` し、そのまま `git commit` を実行してください。コミットメッセージは日本語の Conventional Commit 形式（例: `docs: ~~`）で、後から参照しやすい情報（変更理由・影響範囲など）を盛り込んでください。
+3. コミット後に `git log -1 --stat` を表示して結果を確認し、リモートが設定されている場合のみ `git push` を実行してください（不要なときは理由を明記してください）。
+
+想定外のエラーやコンフリクトが発生したときだけ進行を止めて私に確認を求めてください。それ以外は上記手順を連続で実行し、最後に実行コマンドと要約、発見した注意点をまとめて報告してください。
+```
+
+<Text className="mt-3">
+  コマンドごとに承認を挟まないぶん、<Strong>どこで止まるべきか（想定外の差分・エラー）</Strong>を先に取り決めておくと安全です。push も同じプロンプト内で指示しておけば、環境に応じて AI が実行するか判断し、不要な場合は理由を報告できます。
+</Text>
+
+<Subheading level={2} className="mt-12">試験的な作業用ブランチを AI で作る</Subheading>
+<Text className="mt-3">
+  新しい機能を試すときは、メインブランチを直接変更せずに別ブランチで進めると安全です。下記のプロンプトを送れば、指定した名前のブランチを作成して切り替える操作を AI に任せられます。ブランチ名は送信前に状況に合わせて書き換えてください。
+</Text>
+
+```text
+以下の操作を行ってください。
+1. 現在のブランチと最新コミットを確認し、`git status` で作業ツリーがクリーンかをチェックしてください。クリーンであればその旨を報告して続行し、未コミットの変更があれば処理を止めて状況を報告してください。
+2. `feature/experiment-prototype` という名前のブランチを新規作成し、そのブランチに切り替えてください。
+3. 切り替え後の `git status` を実行し、作業ブランチが `feature/experiment-prototype` になっていることを示してください。
+
+途中で未コミットの変更やコンフリクトが見つかった場合は、処理を止めて私に指示を求めてください。それ以外は連続で実行し、結果ログと簡単な要約を報告してください。
+```
+
+<Text className="mt-3">
+  もし実験が不要になったら、メインに影響が出ないようにブランチを削除するだけで、最新の安定コミットへすぐ戻れます。複数案を並行して検証したいときにも同じパターンでブランチを複製できます。
+</Text>
+
+<Subheading level={2} className="mt-12">作業ブランチをメインへ取り込むプロンプト</Subheading>
+<Text className="mt-3">
+  試験的な作業がまとまり、メイン（または master）へ取り込みたいときのプロンプト例です。AI がブランチを切り替え、最新状態へ更新し、マージ後に push するところまでを担当します。
+</Text>
+
+```text
+以下の手順で現在の作業ブランチを `main` に統合してください。
+1. 今いるブランチ名を確認し、`git status` で未コミットの変更がないかをチェックしてください。変更がなければその旨を報告して次の手順へ進み、変更が残っている場合はこのブランチでコミットするかどうか私に確認してから進めてください。
+2. `main` ブランチへ切り替え、`git pull --ff-only` を実行して最新状態に更新してください。
+3. 元の作業ブランチ（例: `feature/experiment-prototype`）を `main` にマージし、結果を要約してください。コンフリクトが発生した場合はその場で私に指示を仰いでください。
+4. マージ後の `git status` と `git log -3 --oneline` を表示し、取り込みが成功したことを確認してください。
+5. リモートが設定されている場合のみ `git push origin main` を実行し、結果を報告してください。push が不要な場合は理由を明記してください。
+
+想定外のエラーが出た場合だけ処理を止め、それ以外は上記を連続で実行して最後にまとめて報告してください。
+```
+
+<Text className="mt-3">
+  マージ後に元ブランチが不要になったら削除するよう依頼すると、リポジトリを整理しやすくなります。ただし、削除前に本当に不要かどうかだけは自分の目で確認しましょう。
+</Text>
+
+<Subheading level={2} className="mt-12">安全運用のチェックリスト</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li><Strong>作業ブランチを明示</Strong> — <Term definition="Git の作業分岐。ここではAIに操作対象を伝える。">ブランチ</Term>名を書き忘れると別の履歴を壊す恐れがあります。</li>
+  <li><Strong>差分の事前共有</Strong> — 「どのファイルを変更したか」「生成AIが出力した内容か」を最初に伝えると、AI が不要なファイルを巻き込むリスクが減ります。</li>
+  <li><Strong>承認ステップ</Strong> — push など取り消しにくい処理は「実行前に私に確認を取ってから」と明記する。</li>
+  <li><Strong>ログの保存</Strong> — 実行ログをまとめて貼ってもらえば、問題が起きても履歴から原因を追跡できます。</li>
+</ul>
+
+<Subheading level={2} className="mt-12">トラブル発生時のリカバリー</Subheading>
+<Text className="mt-3">
+  AI が想定外の操作をした場合も、これまでに学んだ基礎が役に立ちます。<Code>git status</Code> や <Code>git log</Code> で状況を確認し、必要なら <Code>git restore</Code> や <Code>git revert</Code> を手動で実行して調整しましょう。AI に「問題が起きた箇所をログから抜き出して」と依頼するのも有効です。
+</Text>
+<div className="mt-3 analogy-card" role="note">
+  <p className="leading-6">たとえ: AI に自動操縦を任せていても、緊急時は操縦士が判断して手動操作に切り替えるようなものです。基本操作を理解していれば、切り替えもスムーズに行えます。</p>
+</div>
+
+<Divider soft className="my-10" />
+
+<Subheading level={2}>次のアクション</Subheading>
+<ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>Git基礎1〜3・ブランチ編・GitHub編を復習</Strong> — どのタイミングで AI に任せるか判断する助けになります。
+  </li>
+  <li>
+    <Strong>自分用のプロンプトテンプレートを作成</Strong> — 上記テンプレートをベースに、プロジェクト固有の注意点を追記して保存しておきましょう。
+  </li>
+  <li>
+    <Strong>実際のリポジトリで試行</Strong> — 新しいブランチを切って、AI に add → commit → push まで任せ、ログをレビューする練習をしてみてください。
+  </li>
+</ul>
+
+<Text className="mt-6">
+  AI に任せられる部分が増えるほど開発スピードは高まります。だからこそ、基礎を理解して「どこまで任せるか」「何を自分で確認するか」を決められる力を磨き続けましょう。
+</Text>

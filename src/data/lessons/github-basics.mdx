@@ -7,15 +7,12 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 
 <Heading level={1}>GitHub編：リモート連携と共同作業の第一歩</Heading>
 <Text>
-  Git がローカルの履歴管理ツールなのに対し、GitHub はその履歴をインターネット経由で共有するためのサービスです。ここでは GitHub のアカウント作成からリモートリポジトリとの接続、最低限使う push / pull / clone を段階的に体験します。
+  Git がローカルの履歴管理ツールなのに対し、GitHub はその履歴をインターネット経由で共有するためのサービスです。ここでは GitHub のアカウント作成から<Term definition="インターネット上に配置された Git の金庫。複数人や別端末と履歴を同期できます。">リモートリポジトリ</Term>との接続、最低限使う push / pull / clone を段階的に体験します。
 </Text>
 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-2.5 py-1 text-xs/5 font-semibold text-sky-800 ring-1 ring-sky-200 dark:bg-sky-400/10 dark:text-sky-200 dark:ring-sky-300/30">
   <span className="tracking-wide">更新日: 2025/09/21</span>
 </div>
 
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">用語メモ: <Strong>リモートリポジトリ</Strong> はインターネット上に置いた Git の金庫です。ローカル（自分の PC）の履歴を同期することで、他のメンバーや別の端末と同じ状態を共有できます。</p>
-</div>
 <div className="mt-3 analogy-card" role="note">
   <p className="leading-6">たとえ: ローカルのリポジトリが自宅の作業ノートなら、GitHub はチーム全員が出入りできるロッカーです。必要なときにノートを出し入れできるよう、鍵（認証）と使い方を覚えます。</p>
 </div>
@@ -39,11 +36,8 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 
 <Subheading level={2}>1. GitHub アカウントを用意する</Subheading>
 <Text className="mt-3">
-  初めての場合は <TextLink href="https://github.com/">GitHub</TextLink> にアクセスし、無料アカウントを作成します。メールアドレスの確認が完了したら、プロフィール設定と 2 段階認証の有効化を済ませると安全です。
+  初めての場合は <TextLink href="https://github.com/">GitHub</TextLink> にアクセスし、無料アカウントを作成します。メールアドレスの確認が完了したら、プロフィール設定と<Term definition="パスワードに加えてワンタイムコードを求める保護手段。万が一の漏洩時も乗っ取られにくくなります。">2 段階認証</Term>の有効化を済ませると安全です。
 </Text>
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">用語メモ: <Strong>2 段階認証</Strong> はパスワードに加えてワンタイムコードを入力する仕組みです。万が一パスワードが漏れても、アカウントが守られます。</p>
-</div>
 
 <Text className="mt-4">
   GUI ツールを使う場合は <TextLink href="https://desktop.github.com/">GitHub Desktop</TextLink> をインストールし、同じアカウントでサインインしておくと、リモート操作をボタン一つで確認できます。
@@ -73,11 +67,8 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 
 <Subheading level={2}>3. 既存のローカルリポジトリを接続する</Subheading>
 <Text className="mt-3">
-  すでにローカルで Git 管理しているフォルダがある場合は、クリーン（未コミットの変更がない）状態を確認してからリモートを登録します。
+  すでにローカルで Git 管理しているフォルダがある場合は、クリーン（未コミットの変更がない）状態を確認してからリモートを登録します。<Term definition="Git が覚えている接続先のニックネーム。初期設定では origin をメインの同期先として使います。">リモート</Term> は URL に別名を付けたものと考えるとわかりやすいです。
 </Text>
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">用語メモ: <Strong>リモート</Strong> は Git が覚えておく接続先のニックネームです。初期設定でよく使う <Strong>origin</Strong> は「メインの同期先」という意味合いの慣例名です。</p>
-</div>
 
 ```bash
 # 現在の状態を確認
@@ -93,9 +84,9 @@ git push -u origin main
 <Text className="mt-4">
   <Code>-u</Code> オプションを付けると、次回以降は <Code>git push</Code> だけで OK になります。ブランチ名が <Code>master</Code> の場合はそのまま読み替えてください。
 </Text>
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">補足: <Code>git remote -v</Code> を実行すると、登録済みのリモート一覧と URL が確認できます。push 前に先ほどの URL が設定されているかチェックしましょう。</p>
-</div>
+<Text className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+  迷ったら <Code>git remote -v</Code> で登録済みのリモート一覧と URL を確認し、意図した接続先が設定されているかチェックしましょう。
+</Text>
 
 <Divider className="my-12" />
 
@@ -142,14 +133,30 @@ git push -u origin main
     機密情報を誤って push したら <TextLink href="https://docs.github.com/ja/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository">公式手順</TextLink> を参考に早急に履歴を書き換える
   </li>
 </ul>
-<div className="mt-3 rounded-md border border-emerald-200/80 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-300/50 dark:bg-emerald-400/10 dark:text-emerald-100" role="note">
-  <p className="leading-6">用語メモ: <Strong>.gitignore</Strong> は「Git で無視するファイル一覧」です。ここに追加しておくと、うっかりコミットに含めるミスを減らせます。</p>
-</div>
+<Text className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+  <Term definition="Git で追跡から外したいファイルを列挙する設定ファイル。ここに書くとコミット対象から外せます。">.gitignore</Term> を整えておくと、鍵情報や巨大ファイルがコミットへ紛れ込みにくくなります。
+</Text>
+
+<Divider className="my-12" />
+
+<Subheading level={2}>.gitignore で守るもの</Subheading>
+<Text className="mt-3">
+  <Term definition="Git で追跡から外したいファイルを列挙する設定ファイル。ここに書くとコミット対象から外せます。">.gitignore</Term> に記載したファイルは、ローカルで編集してもリモートには送られません。パスを記載し忘れると、API キーや環境設定、巨大な学習データがそのまま GitHub に載ってしまう可能性があります。
+</Text>
+<Text className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+  うっかり秘密情報を push すると、記録をさかのぼって完全に消すのが大変です。公開リポジトリなら不特定多数に漏洩し、Private でもメンバー全員に共有されてしまいます。初期段階で <Code>.env</Code> や <Code>*.log</Code> など「公開したくないもの」を必ず列挙しましょう。
+</Text>
+<Text className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+  迷ったら <Code>git status</Code> で差分を確認し、コミットに含めたくないファイルが赤字で表示されていないかチェックしてください。気付いた時点で <Code>.gitignore</Code> に追記すれば、以降のコミットには含まれません。
+</Text>
 
 <Divider className="my-12" />
 
 <Subheading level={2}>次のステップ</Subheading>
 <ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
+  <li>
+    <Strong>Git AIアシスト編で自動化</Strong>：<TextLink href="/git-ai-automation">AI に push まで任せるプロンプト</TextLink>を準備する
+  </li>
   <li>
     <Strong>Pull Request を体験</Strong>：ブランチで変更した内容を GitHub 上でレビュー＆マージする流れを学ぶ
   </li>

@@ -90,6 +90,13 @@ const gitFundamentalsLessons: Lesson[] = [
       "リモートリポジトリの作成・push/pull・Cloneまでを超初心者向けに整理。",
     video: null,
   },
+  {
+    id: "git-ai-automation",
+    title: "Git AIアシスト編：AIにGitコマンドを任せるプロンプト術",
+    description:
+      "AI に add / commit / push を依頼するためのプロンプト設計と安全運用のコツ。",
+    video: null,
+  },
 ];
 
 const lessons: Module[] = [

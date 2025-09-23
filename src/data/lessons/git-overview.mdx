@@ -19,6 +19,7 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
 <ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
   <li>Git が解決する問題と「履歴管理ツール」としての役割</li>
   <li>AI 開発で Git を使うメリット（生成AIとの共存を含む）</li>
+  <li>AI に Git 操作を任せる前に理解しておきたいチェックポイント</li>
   <li>実務でありがちな失敗と、Git がどうリカバリーを助けるか</li>
 </ul>
 
@@ -44,6 +45,17 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   Git はブランチという「実験用の分岐」を簡単に扱えます。AI モデルのパラメータを大胆に変えるときでも、別の枝で試せば本番コードに影響を与えません。うまくいった案だけをメインに取り込むことで、速度と安全性を両立できます。
 </Text>
 
+<Subheading level={2} className="mt-12">AI に任せても理解が必要な理由</Subheading>
+<Text className="mt-3">
+  近年は AI エージェントに <Term definition="AI に伝える指示文。相手が理解しやすいよう状況や目的を整理して伝える。">プロンプト</Term> を送るだけで、<Code>git add</Code> や <Code>git commit</Code>、<Code>git push</Code> まで代行させることができます。このシリーズの最後では、実際に AI に任せるための指示テンプレートも紹介します。
+</Text>
+<Text className="mt-3">
+  ただし、<Strong>内部で何が行われているのかを自分が理解していないと、想定外の差分やトラブルに気づけません</Strong>。どこまでが安全な変更かを判断するのは人間の役割です。基礎を押さえておけば、AI が示すログやエラーメッセージを読み解き、必要なときに手動でフォローできます。
+</Text>
+<div className="mt-3 analogy-card" role="note">
+  <p className="leading-6">たとえ: 自動運転の車でも、道路標識やブレーキの仕組みをざっくり知っているドライバーであれば、非常時に安全に介入できます。Git の基本も同じで、AI に任せる前に土台を理解しておくことで安心して任せられます。</p>
+</div>
+
 <Subheading level={2} className="mt-12">ありがちな失敗と回避策</Subheading>
 <ul className="mt-4 space-y-3 text-base/7 text-gray-700 dark:text-gray-300">
   <li>
@@ -66,6 +78,9 @@ import { Divider } from "@catalyst-ui-kit/typescript/divider";
   </li>
   <li>
     <Strong>Git基礎3：変更を記録する超基礎サイクル</Strong>：履歴を残す操作を体験する
+  </li>
+  <li>
+    <Strong>Git AIアシスト編：AI に Git コマンドを任せるプロンプト術</Strong>：<TextLink href="/git-ai-automation">AI に依頼するときのポイント</TextLink>を学ぶ
   </li>
 </ul>
 
